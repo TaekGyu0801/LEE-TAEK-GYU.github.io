@@ -14,8 +14,9 @@ const repoBase = 'https://github.com/TaekGyu0801/LEE-TAEK-GYU.github.io';
 function selectedPhase(){ return submitPhase?.value || 'P0'; }
 function phasePath(){ return `cmp-microled-guide/submissions/${selectedPhase()}`; }
 function loginUrl(){
-  const returnTo = `/TaekGyu0801/LEE-TAEK-GYU.github.io/tree/main/${phasePath()}`;
-  return `https://github.com/login?return_to=${encodeURIComponent(returnTo)}`;
+  // GitHub의 일반 로그인 화면을 작은 팝업으로 연다.
+  // CMP 페이지 자체는 이동하지 않으므로 사용자는 로그인 후 원래 페이지로 바로 돌아올 수 있다.
+  return 'https://github.com/login';
 }
 function uploadUrl(){ return `${repoBase}/upload/main/${phasePath()}`; }
 function newTextUrl(){ return `${repoBase}/new/main/${phasePath()}?filename=result-note.md`; }
@@ -27,7 +28,39 @@ function buildTemplate(){
   return `# ${selectedPhase()} 결과 제출\n\n- 날짜: ${date}\n- 제목: ${submitTitle?.value?.trim() || '(제목 입력)'}\n- 상태: 제출됨 / 검토 전\n\n## 결과 설명\n\n${submitText?.value?.trim() || '(여기에 결과 설명, 실행 조건, 에러 로그 등을 작성)'}\n\n## 첨부 예정 파일\n\n${files}\n\n## 검토 체크\n\n- [ ] 단위 확인\n- [ ] 실행 조건 기록\n- [ ] Gate 조건 대조\n- [ ] ChatGPT 검토 요청\n`;
 }
 
-if (loginBtn) loginBtn.addEventListener('click', ()=> window.open(loginUrl(), '_blank', 'noopener'));
+function openLoginPopup(){
+  const w = 920;
+  const h = 760;
+  const left = Math.max(0, Math.round((window.screen.width - w) / 2));
+  const top = Math.max(0, Math.round((window.screen.height - h) / 2));
+  const popup = window.open(
+    loginUrl(),
+    'cmpGithubLogin',
+    `popup=yes,width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`
+  );
+
+  if (!popup) {
+    if (copyStatus) copyStatus.textContent = '팝업이 차단되었습니다. 브라우저에서 이 사이트의 팝업을 허용한 뒤 다시 눌러 주세요.';
+    return;
+  }
+
+  if (copyStatus) {
+    copyStatus.textContent = 'GitHub 로그인 창을 열었습니다. CMP 페이지는 그대로 유지됩니다. 로그인 후 GitHub 창을 닫으면 이 페이지로 자동 복귀합니다.';
+  }
+
+  // GitHub는 다른 도메인이므로 정적 GitHub Pages에서 로그인 성공 여부 자체를 읽을 수는 없다.
+  // 대신 로그인 창이 닫히는 즉시 원래 CMP 탭을 다시 앞으로 가져온다.
+  const watcher = window.setInterval(() => {
+    if (popup.closed) {
+      window.clearInterval(watcher);
+      window.focus();
+      document.getElementById('submit')?.scrollIntoView({behavior:'smooth', block:'start'});
+      if (copyStatus) copyStatus.textContent = 'GitHub 창을 닫았습니다. 로그인했다면 이제 바로 파일 업로드를 진행하면 됩니다.';
+    }
+  }, 500);
+}
+
+if (loginBtn) loginBtn.addEventListener('click', openLoginPopup);
 if (uploadBtn) uploadBtn.addEventListener('click', ()=> window.open(uploadUrl(), '_blank', 'noopener'));
 if (newTextBtn) newTextBtn.addEventListener('click', ()=> {
   navigator.clipboard?.writeText(buildTemplate()).catch(()=>{});
