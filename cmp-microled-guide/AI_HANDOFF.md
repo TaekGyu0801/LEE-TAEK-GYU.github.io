@@ -91,6 +91,12 @@
   - Claude가 만든 코드/파라미터는 바로 채택하지 않고 ChatGPT가 논리·단위·문헌·Sentaurus 버전 적합성을 다시 검토한 뒤 사용.
   - 단순한 파일 탐색/터미널 확인에는 Claude를 불필요하게 호출하지 않음.
 
+### 2026-08-25 추가 — 기존 GaN PiN Workbench 작업본 확인
+
+- 사용자가 Sentaurus Workbench에 GaN_PiN_Diode 계열 공식 예제를 이미 가져와 과거에 실행해 둔 작업본이 있으며, 화면 가운데 프로젝트로 이름을 바꿔 보관 중임을 확인함.
+- 따라서 설치 트리에서 예제를 다시 찾는 작업은 우선순위에서 제외하고, 현재 작업본의 원본 대비 수정 여부·실행 성공 여부·생성 산출물·재실행 가능성을 먼저 확인하기로 함.
+- Gate 0는 아직 자동 통과 처리하지 않음. 공식 예제 기반임을 확인하더라도 수정 여부와 결과 상태를 확인한 후 PASS 판정.
+
 ### 현재 공식 연구 방향
 
 **TCAD 기반 InGaN/GaN 청색 Micro-LED 사이드월 손상 모델링을 통한 Sidewall-Quality 설계 윈도우 도출**
@@ -124,7 +130,7 @@
 ### 다음 작업 / blocker
 
 1. **계정 교체 전 현재 작업 디렉터리에서 사용자 작성/수정 파일을 우선 백업**하고 P0 Vault에 환경/버전/예제 경로 기록
-2. 현재 설치 트리 `/user/tools/synopsys/sentaurus/T-2022.03`에서 `GaN_PiN_Diode` 공식 예제 실제 위치 탐색
+2. 현재 Workbench의 이름 변경된 GaN PiN 작업본에서 원본 대비 수정 여부, node 성공 상태, 생성 파일/로그를 확인
 3. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
 4. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
 5. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
