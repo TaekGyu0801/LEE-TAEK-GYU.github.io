@@ -160,3 +160,9 @@ function applyPaperVerification(){
 }
 
 applyPaperVerification();
+
+// Separate long-term backup vault UI. This is loaded independently so the existing submission flow remains simple.
+const vaultScript = document.createElement('script');
+vaultScript.src = `vault.js?v=20260825-vault1`;
+vaultScript.defer = true;
+document.body.appendChild(vaultScript);
