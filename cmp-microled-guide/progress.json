@@ -1,0 +1,15 @@
+{
+  "updated": "2026-08-25",
+  "phases": {
+    "P0": {"status": "in-progress", "note": "Sentaurus 환경과 일부 예제 경로는 확인했지만 Gate 0는 아직 공식 통과 처리하지 않음.", "artifacts": []},
+    "P1": {"status": "pending", "note": "", "artifacts": []},
+    "P2": {"status": "pending", "note": "", "artifacts": []},
+    "P3": {"status": "pending", "note": "", "artifacts": []},
+    "P4": {"status": "pending", "note": "", "artifacts": []},
+    "P5": {"status": "pending", "note": "", "artifacts": []},
+    "P6": {"status": "pending", "note": "", "artifacts": []},
+    "P7": {"status": "pending", "note": "", "artifacts": []},
+    "P8": {"status": "pending", "note": "", "artifacts": []},
+    "P9": {"status": "pending", "note": "", "artifacts": []}
+  }
+}
