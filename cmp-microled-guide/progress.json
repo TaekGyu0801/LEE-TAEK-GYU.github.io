@@ -1,7 +1,7 @@
 {
   "updated": "2026-08-25",
   "phases": {
-    "P0": {"status": "in-progress", "note": "Sentaurus 환경과 일부 예제 경로는 확인했지만 Gate 0는 아직 공식 통과 처리하지 않음.", "artifacts": []},
+    "P0": {"status": "in-progress", "note": "현재 계정 semi302 / host ssudisu1 환경 스냅샷 저장 완료. /user/tools/synopsys/sentaurus/T-2022.03/bin 에서 sdevice/sde/swb/sprocess 확인, Python 3.8.11 확인. STROOT/STRELEASE는 현재 shell에서 undefined이며, 이전 서버의 /home/eda/.../GaN_PiN_Diode 경로는 이 환경에 존재하지 않음. 다음 작업은 현재 설치 트리에서 공식 GaN_PiN_Diode 예제 위치를 탐색하는 것.", "artifacts": [{"label":"semi302 environment snapshot","path":"tcad-vault/_current-account/2026-08-25_semi302_environment.md"}]},
     "P1": {"status": "pending", "note": "", "artifacts": []},
     "P2": {"status": "pending", "note": "", "artifacts": []},
     "P3": {"status": "pending", "note": "", "artifacts": []},
