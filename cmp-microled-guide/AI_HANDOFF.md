@@ -72,6 +72,25 @@
 - 공개 저장소 보안/라이선스 경고를 사이드바와 README에 명시함. 비밀번호, 토큰, SSH key, 라이선스 파일, 민감한 서버 내부정보, 배포 권한이 확인되지 않은 Synopsys 매뉴얼/설치 라이브러리 원본은 업로드하지 않음.
 - Synopsys 설치 예제는 원본 전체 공개 복제보다 **예제명/설치 경로/사용한 설정을 기록하고 사용자가 작성·수정한 파일 위주로 백업**하는 것을 기본 원칙으로 함.
 
+### 2026-08-25 추가 — P0 실제 환경 확인 + ChatGPT/Claude 역할 분담
+
+- 실제 현재 TCAD 세션에서 확인한 환경:
+  - account `semi302`
+  - host prompt `ssudisu1`
+  - current/home path `/user/semi/semi302`
+  - shell `/bin/csh`
+  - `STROOT`, `STRELEASE`는 현재 shell에서 undefined
+  - `sdevice`, `sde`, `swb`, `sprocess`는 모두 `/user/tools/synopsys/sentaurus/T-2022.03/bin/`에서 resolve
+  - Python `3.8.11`
+- 이전 다른 서버에서 확인했던 `/home/eda/synopsys/tcad/T-2022.03/Applications_Library/GettingStarted/sdevice/GaN_PiN_Diode` 경로는 현재 환경에는 존재하지 않음. 서버/계정 간 경로를 추측해서 재사용하지 말 것.
+- 환경 스냅샷을 `tcad-vault/_current-account/2026-08-25_semi302_environment.md`에 저장함.
+- 사용자 요청에 따른 역할 분담:
+  - **ChatGPT**: 연구 논리, 물리적 타당성, 문헌 근거, 단계 설계, Gate 판정, 결과 검토를 담당.
+  - **Claude**: 실제 Sentaurus 코드 작성/수정 또는 구체적 파라미터 구성 작업이 필요할 때 코드 작성 역할로 활용.
+  - 코드/파라미터 작업 전 ChatGPT가 Claude에게 전달할 프롬프트를 작성하며, 프롬프트에는 현재 Phase, 목적, 검증된 환경/버전, 물리 가정, 금지사항, 필요한 입력/출력, 모르는 값은 추측하지 말라는 규칙을 포함.
+  - Claude가 만든 코드/파라미터는 바로 채택하지 않고 ChatGPT가 논리·단위·문헌·Sentaurus 버전 적합성을 다시 검토한 뒤 사용.
+  - 단순한 파일 탐색/터미널 확인에는 Claude를 불필요하게 호출하지 않음.
+
 ### 현재 공식 연구 방향
 
 **TCAD 기반 InGaN/GaN 청색 Micro-LED 사이드월 손상 모델링을 통한 Sidewall-Quality 설계 윈도우 도출**
@@ -105,12 +124,13 @@
 ### 다음 작업 / blocker
 
 1. **계정 교체 전 현재 작업 디렉터리에서 사용자 작성/수정 파일을 우선 백업**하고 P0 Vault에 환경/버전/예제 경로 기록
-2. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
-3. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
-4. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
-5. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
-6. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
-7. 필요 시 각 원문의 Figure/Table/Page를 Phase별 근거에 더 세밀하게 연결
+2. 현재 설치 트리 `/user/tools/synopsys/sentaurus/T-2022.03`에서 `GaN_PiN_Diode` 공식 예제 실제 위치 탐색
+3. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
+4. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
+5. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
+6. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
+7. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
+8. 필요 시 각 원문의 Figure/Table/Page를 Phase별 근거에 더 세밀하게 연결
 
 ### 주의
 
