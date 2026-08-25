@@ -6,6 +6,7 @@
   <title>CMP Micro-LED TCAD Research Guide</title>
   <meta name="description" content="InGaN/GaN Micro-LED sidewall TCAD research guide, progress dashboard, artifacts and validation gates" />
   <link rel="stylesheet" href="style.css?v=20260825-light2" />
+  <link rel="stylesheet" href="submit.css?v=20260825-submit1" />
 </head>
 <body>
   <header class="hero">
@@ -15,9 +16,10 @@
       <p class="lead">가이드라인을 읽고 → 작업하고 → 결과를 업로드하고 → Gate를 통과하면 다음 단계로 넘어가는 <strong>프로젝트형 연구 사이트</strong>입니다.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#workflow">가이드 시작</a>
+        <a class="btn" href="#submit">결과 제출</a>
         <a class="btn" href="GUIDELINE.md">전체 Run Sheet</a>
-        <a class="btn" href="UPLOAD_GUIDE.md">결과 업로드 방법</a>
         <a class="btn" href="#references">논문 근거</a>
+        <button class="btn login-btn" id="githubLoginBtn" type="button">GitHub 로그인 ↗</button>
       </div>
       <div class="progress-card">
         <div class="progress-head"><span>공식 프로젝트 진행률</span><strong id="progressText">불러오는 중…</strong></div>
@@ -50,11 +52,66 @@
         <div class="flow-arrow">→</div>
         <div class="flow-step"><b>3</b><span>결과 검토</span><small>논리·단위·문헌 대조</small></div>
         <div class="flow-arrow">→</div>
-        <div class="flow-step"><b>4</b><span>GitHub 업로드</span><small>Phase 결과물 저장</small></div>
+        <div class="flow-step"><b>4</b><span>GitHub 제출</span><small>Phase 결과물 저장</small></div>
         <div class="flow-arrow">→</div>
         <div class="flow-step"><b>5</b><span>Gate 통과</span><small>사이트에 완료 표시</small></div>
       </div>
-      <div class="gate"><strong>가장 쉬운 방법</strong> · 결과 파일을 ChatGPT에 올리고 “P2 결과 업로드해줘”라고 요청하면, 검토 후 GitHub artifact와 공식 진행상태를 같이 갱신하는 방식으로 운영할 수 있습니다.</div>
+      <div class="gate"><strong>운영 원칙</strong> · 제출했다고 바로 완료 처리하지 않습니다. 제출 → 검토 → Gate PASS/수정 필요 순서로 관리합니다.</div>
+    </section>
+
+    <section id="submit">
+      <div class="submission-center">
+        <div class="submission-head">
+          <div>
+            <h2>결과 제출 센터</h2>
+            <p>Phase를 선택하고 파일·Excel/CSV·이미지·코드·텍스트 결과를 해당 Phase의 GitHub 제출 폴더에 올립니다.</p>
+          </div>
+          <button class="btn login-btn" id="githubLoginBtn2" type="button" onclick="document.getElementById('githubLoginBtn').click()">GitHub 로그인 ↗</button>
+        </div>
+
+        <div class="submission-grid">
+          <div class="field">
+            <label for="submitPhase">1. 제출 Phase</label>
+            <select id="submitPhase">
+              <option value="P0">P0 · 환경·논문·단위 잠금</option>
+              <option value="P1">P1 · GaN PiN 기준 소자</option>
+              <option value="P2">P2 · InGaN/GaN MQW LED baseline</option>
+              <option value="P3">P3 · Polarization + Recombination physics</option>
+              <option value="P4">P4 · Size scaling / 2D normalization</option>
+              <option value="P5">P5 · Model A · Surface-only</option>
+              <option value="P6">P6 · Model B · Finite damaged region</option>
+              <option value="P7">P7 · Calibration · Validation</option>
+              <option value="P8">P8 · Sidewall-Quality Design Window</option>
+              <option value="P9">P9 · Wet/ALD 해석 · 최종 패키지</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="submitTitle">2. 결과 제목</label>
+            <input id="submitTitle" type="text" placeholder="예: P2 baseline IV 및 MQW recombination 결과" />
+          </div>
+
+          <div class="field full">
+            <label for="submitFiles">3. 제출할 파일 확인</label>
+            <input id="submitFiles" type="file" multiple accept=".xlsx,.xls,.csv,.txt,.md,.cmd,.plt,.tdr,.log,.png,.jpg,.jpeg,.pdf,.zip" />
+            <div class="helper" id="fileSummary">선택된 파일 없음</div>
+            <div class="helper">이 선택창은 제출할 파일을 확인하기 위한 용도입니다. 실제 저장은 아래 ‘GitHub 파일 업로드’에서 같은 파일을 선택합니다.</div>
+          </div>
+
+          <div class="field full">
+            <label for="submitText">4. 결과 설명 / 코드 / 에러 로그 복붙</label>
+            <textarea id="submitText" placeholder="실행 조건, 결과 해석, 에러 메시지, 코드 일부 등을 그대로 붙여넣어도 됩니다."></textarea>
+          </div>
+        </div>
+
+        <div class="submission-actions">
+          <button class="btn submit-primary" id="githubUploadBtn" type="button">파일·Excel·이미지 GitHub 업로드 ↗</button>
+          <button class="btn submit-secondary" id="githubNewTextBtn" type="button">텍스트 결과 파일 만들기 ↗</button>
+          <button class="btn" id="copySubmissionBtn" type="button">제출 내용 복사</button>
+        </div>
+        <div class="copy-status" id="copyStatus"></div>
+        <div class="submission-note"><strong>왜 GitHub 화면을 한 번 거치나?</strong> 이 사이트는 GitHub Pages 정적 사이트라 비밀번호나 GitHub 권한 토큰을 사이트 코드에 저장하지 않습니다. 로그인과 실제 파일 저장은 GitHub 공식 화면에서 처리하고, 이 사이트는 Phase별 제출 위치로 바로 연결합니다.</div>
+      </div>
     </section>
 
     <section class="source-tags">
@@ -72,7 +129,7 @@
     <section id="workflow">
       <div class="section-head">
         <div><h2>Research Phases</h2><p>각 Phase에 공식 상태와 업로드된 결과물이 함께 표시됩니다.</p></div>
-        <a class="btn small" href="UPLOAD_GUIDE.md">업로드 규칙 보기</a>
+        <a class="btn small" href="#submit">결과 제출하기</a>
       </div>
       <div id="phaseList" class="phase-list"></div>
     </section>
@@ -94,20 +151,20 @@
 
     <section id="references">
       <h2>논문 → 가이드라인 Traceability</h2>
-      <p class="section-intro">어떤 논문을 어디에 썼는지 바로 확인할 수 있도록 연결했습니다.</p>
+      <p class="section-intro">논문 제목을 누르면 원문/DOI 페이지가 열립니다. 나중에 네가 PDF를 보내주면 공개 가능한 것은 사이트 내부 PDF 링크로 바꿀 수 있습니다.</p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>ID</th><th>문헌</th><th>사용 위치</th></tr></thead>
           <tbody>
-            <tr><td>R1</td><td>Shin (2024), GIST Master Thesis</td><td>실제 baseline geometry, size series, leakage/J-L/passivation trend, conceptual process</td></tr>
-            <tr><td>R2</td><td>Wong et al., Optics Express (2018), DOI 10.1364/OE.26.021324</td><td>InGaN/GaN MQW 실행 proxy, ALD passivation trend</td></tr>
-            <tr><td>R3</td><td>Wong et al., Applied Physics Express (2019), DOI 10.7567/1882-0786/ab3949</td><td>size-dependent chemical treatment + ALD calibration 후보</td></tr>
-            <tr><td>R4</td><td>Ley et al., Applied Physics Letters (2020), DOI 10.1063/5.0011651</td><td>독립 validation / treated-device size trend / LEE 주의</td></tr>
-            <tr><td>R5</td><td>Liu et al., Light: Science & Applications (2025), DOI 10.1038/s41377-025-01751-y</td><td>damage depth vs effective influence width, wet removal vs surface passivation 분류</td></tr>
-            <tr><td>R6</td><td>David, Physical Review Applied (2021), DOI 10.1103/PhysRevApplied.15.054015</td><td>carrier-density-dependent diffusion, representative ABC sensitivity</td></tr>
-            <tr><td>R7</td><td>Park et al., Nanoscale Research Letters (2022), DOI 10.1186/s11671-022-03669-5</td><td>ABC→effective SRV extraction 방법론, J@peak 분석. AlGaInP 수치 직접 이식 금지</td></tr>
-            <tr><td>R8</td><td>Bulashevich & Karpov, Photonics (2018) 5(4), 41</td><td>InGaN modeling SRV order-of-magnitude 참고</td></tr>
-            <tr><td>R9</td><td>Wang et al., Applied Physics Letters (2026), DOI 10.1063/5.0328266</td><td>최신 scope check: chemical etching + dielectric passivation + APSYS 선행 연구 확인</td></tr>
+            <tr><td>R1</td><td><a class="paper-link" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">Study of Double-Layer Passivation Effects in InGaN-based Blue Micro LEDs</a><div class="paper-actions"><a class="paper-badge" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">GIST 원문 ↗</a></div></td><td>실제 baseline geometry, size series, leakage/J-L/passivation trend, conceptual process</td></tr>
+            <tr><td>R2</td><td><a class="paper-link" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">High efficiency of III-nitride micro-light-emitting diodes by sidewall passivation using atomic layer deposition</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">DOI ↗</a></div></td><td>InGaN/GaN MQW 실행 proxy, ALD passivation trend</td></tr>
+            <tr><td>R3</td><td><a class="paper-link" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">Size-independent peak efficiency of III-nitride micro-light-emitting-diodes using chemical treatment and sidewall passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">DOI ↗</a></div></td><td>size-dependent chemical treatment + ALD calibration 후보</td></tr>
+            <tr><td>R4</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">Revealing the importance of light extraction efficiency in InGaN/GaN microLEDs via chemical treatment and dielectric passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">DOI ↗</a></div></td><td>독립 validation / treated-device size trend / LEE 주의</td></tr>
+            <tr><td>R5</td><td><a class="paper-link" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">Advanced technologies in InGaN micro-LED fabrication to mitigate the sidewall effect</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">DOI ↗</a></div></td><td>damage depth vs effective influence width, wet removal vs surface passivation 분류</td></tr>
+            <tr><td>R6</td><td><a class="paper-link" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">Long-Range Carrier Diffusion in (In,Ga)N Quantum Wells and Implications from Fundamentals to Devices</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">DOI ↗</a></div></td><td>carrier-density-dependent diffusion, representative ABC sensitivity</td></tr>
+            <tr><td>R7</td><td><a class="paper-link" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">Understanding the Sidewall Passivation Effects in AlGaInP/GaInP Micro-LED</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">DOI ↗</a></div></td><td>ABC→effective SRV extraction 방법론, J@peak 분석. AlGaInP 수치 직접 이식 금지</td></tr>
+            <tr><td>R8</td><td><a class="paper-link" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">Effect of Die Shape and Size on Performance of III-Nitride Micro-LEDs: A Modeling Study</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">DOI ↗</a></div></td><td>InGaN modeling / size effect / 모델링 참고</td></tr>
+            <tr><td>R9</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">Optoelectronic performance enhancement of 1–5 μm InGaN-based micro-LEDs using chemical etching coupled with dielectric passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">DOI ↗</a></div></td><td>최신 scope check: chemical etching + dielectric passivation + APSYS 선행 연구 확인</td></tr>
           </tbody>
         </table>
       </div>
@@ -124,5 +181,6 @@
   </footer>
 
   <script src="app.js?v=20260825-light2"></script>
+  <script src="submit.js?v=20260825-submit1"></script>
 </body>
 </html>
