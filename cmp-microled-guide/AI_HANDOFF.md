@@ -48,6 +48,13 @@
 - 저작권/라이선스: R5/R7/R8은 CC BY 4.0, R1은 CC BY-NC-ND 2.0 KR을 첨부본에서 확인. R3/R4/R6/R9는 첨부본에서 공개 재배포를 허용하는 CC 라이선스를 확인하지 못했으므로 공개 GitHub에는 PDF 복제본을 올리지 않고 DOI/출판사 링크를 유지함.
 - R2는 Optica 공식 issue page에서 PDF 제공을 확인했으며 공식 endpoint는 `https://opg.optica.org/oe/viewmedia.cfm?seq=0&uri=oe-26-16-21324`.
 
+### 2026-08-25 추가 — 로그인 후 CMP 페이지 복귀 UX
+
+- 사용자가 GitHub 로그인 후 CMP 사이트를 다시 찾아올 필요가 없도록 로그인 방식을 수정함.
+- `GitHub 로그인` 버튼은 현재 CMP 페이지를 이동시키지 않고 별도 팝업 창으로 GitHub 로그인 화면을 엶.
+- 사용자가 로그인 창을 닫으면 원래 CMP 페이지를 다시 포커스하고 `결과 제출 센터` 위치로 자동 스크롤함.
+- GitHub Pages 정적 사이트는 다른 도메인인 GitHub의 로그인 성공 여부를 직접 읽을 수 없으므로, 로그인 성공 순간 팝업을 자동 종료하는 완전한 OAuth callback 방식은 현재 사용하지 않음. 이를 구현하려면 GitHub OAuth/GitHub App 등록과 callback 구성이 필요함.
+
 ### 현재 공식 연구 방향
 
 **TCAD 기반 InGaN/GaN 청색 Micro-LED 사이드월 손상 모델링을 통한 Sidewall-Quality 설계 윈도우 도출**
