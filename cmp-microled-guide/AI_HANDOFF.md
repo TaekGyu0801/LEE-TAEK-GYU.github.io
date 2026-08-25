@@ -35,7 +35,18 @@
 - `텍스트 결과 파일 만들기`는 Phase별 GitHub new-file 화면을 열고 제출 템플릿을 클립보드에 복사함.
 - GitHub Pages는 정적 사이트이므로 GitHub 비밀번호/PAT/token을 코드에 저장하지 않음. 실제 인증과 파일 저장은 GitHub 공식 화면에서 수행.
 - 관련 파일: `submit.css`, `submit.js`.
-- 논문 traceability 표에는 정확한 논문 제목과 DOI/원문 링크를 추가함. 사용자가 PDF를 제공하면 공개 재배포 가능 여부를 확인한 뒤 내부 PDF 링크로 교체 가능.
+- 논문 traceability 표에는 정확한 논문 제목과 DOI/원문 링크를 추가함.
+
+### 2026-08-25 추가 — 사용자 제공 PDF 원문 검증
+
+- 사용자가 R1, R3, R4, R5, R6, R7, R8, R9 PDF를 제공함. 제목/저자/연도/DOI를 실제 원문과 대조했고 번호는 모두 맞았음. R2만 사용자 첨부 PDF가 없음.
+- `cmp-microled-guide/PAPER_INDEX.md`를 생성하여 R1–R9의 검증 상태, CMP 사용 위치, 공개 재배포 주의사항을 기록함.
+- 사이트 문헌표에 `PDF 검토 완료`, Open Access 상태, R2 `Optica 공식 PDF` 링크를 동적으로 표시하도록 `submit.js`를 갱신함.
+- R8 저자 표기는 Bulashevich, **Konoplev**, Karpov 3인으로 확인함.
+- R8에서 사용한 `VS = 7.5×10^3 cm/s`는 R8이 새로 측정한 값이 아니라 선행문헌 [22]에서 가져온 simulation input임을 기록함.
+- R9는 단순 scope-check를 넘어 1–5 μm 직접 실험, EQE/ABC 기반 SRV fitting, APSYS sidewall-defect-density simulation을 포함하므로 close competitor 및 validation 후보로 강화함.
+- 저작권/라이선스: R5/R7/R8은 CC BY 4.0, R1은 CC BY-NC-ND 2.0 KR을 첨부본에서 확인. R3/R4/R6/R9는 첨부본에서 공개 재배포를 허용하는 CC 라이선스를 확인하지 못했으므로 공개 GitHub에는 PDF 복제본을 올리지 않고 DOI/출판사 링크를 유지함.
+- R2는 Optica 공식 issue page에서 PDF 제공을 확인했으며 공식 endpoint는 `https://opg.optica.org/oe/viewmedia.cfm?seq=0&uri=oe-26-16-21324`.
 
 ### 현재 공식 연구 방향
 
@@ -65,7 +76,7 @@
 - David (2021), Physical Review Applied — carrier-density-dependent lateral diffusion + representative ABC set
 - Park et al. (2022), Nanoscale Research Letters — ABC→effective SRV methodology; AlGaInP 수치는 InGaN에 직접 이식 금지
 - Bulashevich, Konoplev & Karpov (2018), Photonics — III-nitride micro-LED modeling / size effect reference
-- Wang et al. (2026), Applied Physics Letters — recent chemical etching + dielectric passivation + APSYS scope check
+- Wang et al. (2026), Applied Physics Letters — 1–5 μm experiment + ABC/SRV fitting + APSYS sidewall-defect modeling
 
 ### 다음 작업 / blocker
 
@@ -74,7 +85,7 @@
 3. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
 4. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
 5. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
-6. 사용자가 제공할 논문 PDF를 검토해 사이트 문헌 링크 및 Phase별 근거 위치를 정교화
+6. 필요 시 각 원문의 Figure/Table/Page를 Phase별 근거에 더 세밀하게 연결
 
 ### 주의
 
