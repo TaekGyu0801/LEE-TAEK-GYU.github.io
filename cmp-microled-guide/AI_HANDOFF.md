@@ -55,6 +55,23 @@
 - 사용자가 로그인 창을 닫으면 원래 CMP 페이지를 다시 포커스하고 `결과 제출 센터` 위치로 자동 스크롤함.
 - GitHub Pages 정적 사이트는 다른 도메인인 GitHub의 로그인 성공 여부를 직접 읽을 수 없으므로, 로그인 성공 순간 팝업을 자동 종료하는 완전한 OAuth callback 방식은 현재 사용하지 않음. 이를 구현하려면 GitHub OAuth/GitHub App 등록과 callback 구성이 필요함.
 
+### 2026-08-25 추가 — TCAD 계정 교체 대비 Research Vault
+
+- 사용자가 현재 사용하는 TCAD 계정이 2026년 8월 말까지이고 이후 새 계정으로 교체될 가능성이 있으므로, 기존 계정에서 만든 예제/코드/결과/환경 메모를 잃지 않도록 **결과 제출과 별개의 장기 백업 저장소**를 추가함.
+- 신규 저장소 루트: `cmp-microled-guide/tcad-vault/`
+- 폴더 구성:
+  - `_inbox` — 분류 전 빠른 백업
+  - `_shared` — 여러 Phase에서 공통으로 사용하는 사용자 작성 자료
+  - `_current-account` — 현재 계정의 버전/환경/재실행 메모
+  - `P0`~`P9` — Phase별 자유 백업
+- 신규 UI 파일: `vault.js`, `vault.css`.
+- 사이트 오른쪽에 `TCAD Research Vault` 사이드바를 추가함. 데스크톱에서는 오른쪽 고정, 좁은 화면에서는 하단 고정/접기 방식.
+- 각 P0~P9 카드 오른쪽에 `📦 저장소` 버튼을 추가함. 누르면 사이트 안 모달에서 해당 Phase의 GitHub 저장 파일 목록을 확인하고 `파일 업로드`/`GitHub 폴더 보기`를 실행할 수 있음.
+- 파일 목록은 공개 GitHub Contents API에서 동적으로 불러오며 README는 목록에서 숨김.
+- `결과 제출(submissions)`은 Gate 검토용, `tcad-vault`는 재현/보존용으로 역할을 분리함.
+- 공개 저장소 보안/라이선스 경고를 사이드바와 README에 명시함. 비밀번호, 토큰, SSH key, 라이선스 파일, 민감한 서버 내부정보, 배포 권한이 확인되지 않은 Synopsys 매뉴얼/설치 라이브러리 원본은 업로드하지 않음.
+- Synopsys 설치 예제는 원본 전체 공개 복제보다 **예제명/설치 경로/사용한 설정을 기록하고 사용자가 작성·수정한 파일 위주로 백업**하는 것을 기본 원칙으로 함.
+
 ### 현재 공식 연구 방향
 
 **TCAD 기반 InGaN/GaN 청색 Micro-LED 사이드월 손상 모델링을 통한 Sidewall-Quality 설계 윈도우 도출**
@@ -87,12 +104,13 @@
 
 ### 다음 작업 / blocker
 
-1. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
-2. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
-3. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
-4. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
-5. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
-6. 필요 시 각 원문의 Figure/Table/Page를 Phase별 근거에 더 세밀하게 연결
+1. **계정 교체 전 현재 작업 디렉터리에서 사용자 작성/수정 파일을 우선 백업**하고 P0 Vault에 환경/버전/예제 경로 기록
+2. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
+3. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
+4. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
+5. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
+6. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
+7. 필요 시 각 원문의 Figure/Table/Page를 Phase별 근거에 더 세밀하게 연결
 
 ### 주의
 
