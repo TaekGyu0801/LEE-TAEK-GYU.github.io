@@ -1,0 +1,88 @@
+name: CMP 결과 제출
+description: CMP Micro-LED TCAD Phase 결과를 제출합니다.
+title: "[CMP 결과] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## CMP Micro-LED TCAD 결과 제출
+        제출한 결과는 검토 후 해당 Phase의 Gate PASS / 수정 필요 여부를 판단합니다.
+
+        **파일 첨부 방법:** 아래 텍스트 입력칸에 파일을 드래그앤드롭하거나 붙여넣어 첨부할 수 있습니다. Excel/CSV, 이미지, PDF 등은 GitHub가 허용하는 형식으로 첨부해 주세요. 허용되지 않는 형식은 ZIP으로 묶어 제출하면 됩니다.
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      description: 결과가 속한 Phase를 선택하세요.
+      options:
+        - P0 · 환경·논문·단위 잠금
+        - P1 · GaN PiN 기준 소자
+        - P2 · InGaN/GaN MQW LED baseline
+        - P3 · Polarization + Recombination physics
+        - P4 · Size scaling / 2D normalization
+        - P5 · Model A · Surface-only
+        - P6 · Model B · Finite damaged region
+        - P7 · Calibration · 독립 Validation · 모델 선택
+        - P8 · Sidewall-Quality Design Window
+        - P9 · Wet/ALD 해석 · 최종 패키지
+    validations:
+      required: true
+
+  - type: textarea
+    id: conditions
+    attributes:
+      label: 실행 조건
+      description: TCAD 버전, 주요 bias, geometry, sweep 변수 등 재현에 필요한 조건을 적어 주세요.
+      placeholder: |
+        Sentaurus: T-2022.03
+        Device size: 10 µm
+        Sweep: SRV = ...
+        Bias: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 결과 요약
+      description: 무엇을 확인했고 어떤 경향이 나왔는지 간단히 적어 주세요.
+      placeholder: 결과와 관찰한 경향을 적어 주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: 결과 파일 / Excel / CSV / 이미지 첨부
+      description: 이 칸에 파일을 드래그앤드롭하거나 붙여넣으세요. 코드나 로그를 직접 붙여넣어도 됩니다.
+      placeholder: 파일을 여기에 끌어다 놓거나, 코드/로그/텍스트를 붙여넣으세요.
+
+  - type: textarea
+    id: gate
+    attributes:
+      label: Gate 근거
+      description: 해당 Phase의 Gate를 통과했다고 판단한 근거가 있다면 적어 주세요. 확신이 없으면 '검토 필요'라고 적어도 됩니다.
+      placeholder: 예) mesh refinement 후 핵심 출력 변화가 5% 이내 / 검토 필요
+
+  - type: textarea
+    id: problems
+    attributes:
+      label: 문제 / 특이사항
+      description: 수렴 실패, 이상 그래프, 미확인 단위, 추측값 등이 있으면 반드시 적어 주세요.
+      placeholder: 없다면 '없음'이라고 적어 주세요.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 제출 전 확인
+      options:
+        - label: 추측 또는 임의값이 있다면 결과 설명에 명시했습니다.
+          required: true
+        - label: 그래프/표의 축과 단위를 확인했습니다.
+          required: true
+        - label: 이 제출이 자동으로 Gate PASS를 의미하지 않는다는 점을 이해했습니다.
+          required: true
