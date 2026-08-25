@@ -1,7 +1,7 @@
 {
   "updated": "2026-08-25",
   "phases": {
-    "P0": {"status": "in-progress", "note": "현재 계정 semi302 / host ssudisu1 환경 스냅샷 저장 완료. /user/tools/synopsys/sentaurus/T-2022.03/bin 에서 sdevice/sde/swb/sprocess 확인, Python 3.8.11 확인. STROOT/STRELEASE는 현재 shell에서 undefined. 사용자가 GaN_PiN_Diode 계열 공식 예제를 이미 Sentaurus Workbench에 가져와 실행했고, 화면 가운데 작업 프로젝트로 이름을 바꿔 보관 중이라고 확인. 아직 원본 대비 수정 여부와 실행 성공 산출물을 확인하지 않았으므로 Gate 0는 미통과 상태.", "artifacts": [{"label":"semi302 environment snapshot","path":"tcad-vault/_current-account/2026-08-25_semi302_environment.md"}]},
+    "P0": {"status": "in-progress", "note": "현재 계정 semi302 / host ssudisu1 환경 스냅샷 저장 완료. /user/tools/synopsys/sentaurus/T-2022.03/bin 에서 sdevice/sde/swb/sprocess 확인, Python 3.8.11 확인. STROOT/STRELEASE는 현재 shell에서 undefined. 사용자가 GaN_PiN_Diode 계열 공식 예제를 Sentaurus Workbench에 가져와 실행한 뒤 `CMP_PIN_DIODE`로 이름을 바꿔 보관 중임. 현재 workflow는 SDE → SDEVICE → SVISUAL → SDEVICE → SVISUAL이며, 표에 Vknee=3.190, BV=162.19가 표시됨. 이는 이전 실행에서 전방/역방향 특성의 추출값이 생성된 정황으로 보이지만, 정확한 node 역할과 원본 대비 수정 여부는 각 command/file을 열어 확인 전까지 단정하지 않음. Gate 0는 아직 미통과.", "artifacts": [{"label":"semi302 environment snapshot","path":"tcad-vault/_current-account/2026-08-25_semi302_environment.md"}]},
     "P1": {"status": "pending", "note": "", "artifacts": []},
     "P2": {"status": "pending", "note": "", "artifacts": []},
     "P3": {"status": "pending", "note": "", "artifacts": []},
