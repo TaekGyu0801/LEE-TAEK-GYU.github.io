@@ -13,6 +13,19 @@
 - 각 Phase에 초보자용 목적 설명, 수행 순서, Gate/중단 조건을 포함함.
 - 문헌 traceability table을 가이드 하단과 사이트에 포함함.
 
+### 2026-08-25 추가 — 업로드형 사이트 운영 방식
+
+- 사용자는 GitHub 파일을 하나씩 직접 열어보는 방식보다 VCAT 경진대회 사이트처럼 브라우저에서 Phase별 가이드와 결과물을 보는 방식을 선호함.
+- 로그인 기능은 필요 없음.
+- 각 Phase 작업 완료 후 결과를 GitHub에 업로드하고, 사이트가 해당 결과 링크와 공식 상태를 표시하는 방식으로 운영하기로 함.
+- 신규 파일:
+  - `cmp-microled-guide/progress.json` — Phase별 공식 상태 및 artifact 목록
+  - `cmp-microled-guide/UPLOAD_GUIDE.md` — 결과 업로드 방식
+- 사이트의 localStorage 체크박스 방식은 공식 진행상태 방식으로 변경함.
+- `pending / in-progress / complete / blocked` 상태를 사용함.
+- 결과물이 업로드되고 Gate를 통과해야 `complete`로 처리함.
+- 사용자가 ChatGPT에 결과 파일을 보내고 “P# 결과 업로드해줘”라고 요청하면, 검토 후 artifact 업로드 + progress 갱신하는 방식이 기본 워크플로우임.
+
 ### 현재 공식 연구 방향
 
 **TCAD 기반 InGaN/GaN 청색 Micro-LED 사이드월 손상 모델링을 통한 Sidewall-Quality 설계 윈도우 도출**
@@ -34,7 +47,7 @@
 ### 문헌 기반 핵심 소스
 
 - Shin (2024), GIST Master Thesis — baseline geometry / size / passivation electrical-optical trend
-- Wong et al. (2018), Optics Express — 공개된 6× InGaN/GaN MQW 구조 proxy + ALD passivation trend
+- Wong et al. (2018), Optics Express — 공개된 InGaN/GaN MQW 구조 proxy + ALD passivation trend
 - Wong et al. (2019), Applied Physics Express — chemical treatment + ALD size-dependent calibration candidate
 - Ley et al. (2020), Applied Physics Letters — independent validation / treated size trend
 - Liu et al. (2025), Light: Science & Applications — sidewall damage/passivation review, physical damage vs effective influence width
@@ -45,11 +58,12 @@
 
 ### 다음 작업 / blocker
 
-1. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
-2. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
-3. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
-4. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
-5. Phase 0부터 실제 실행 시작 후 사이트 progress tracker 업데이트
+1. GitHub Pages 배포 활성화 여부 확인. 현재 connector에서는 Pages 설정 변경 기능이 없음.
+2. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
+3. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
+4. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
+5. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
+6. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
 
 ### 주의
 
