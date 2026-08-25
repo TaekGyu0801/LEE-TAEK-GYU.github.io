@@ -122,4 +122,29 @@ async function loadOfficialProgress() {
   render();
 }
 
+const paperLinks = {
+  R1: 'https://scholar.gist.ac.kr/handle/local/19726',
+  R2: 'https://doi.org/10.1364/OE.26.021324',
+  R3: 'https://doi.org/10.7567/1882-0786/ab3949',
+  R4: 'https://doi.org/10.1063/5.0011651',
+  R5: 'https://doi.org/10.1038/s41377-025-01751-y',
+  R6: 'https://doi.org/10.1103/PhysRevApplied.15.054015',
+  R7: 'https://doi.org/10.1186/s11671-022-03669-5',
+  R8: 'https://doi.org/10.3390/photonics5040041',
+  R9: 'https://doi.org/10.1063/5.0328266'
+};
+
+function linkReferencePapers() {
+  document.querySelectorAll('#references tbody tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    if (cells.length < 2) return;
+    const id = cells[0].textContent.trim();
+    const href = paperLinks[id];
+    if (!href) return;
+    const title = cells[1].textContent.trim();
+    cells[1].innerHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer" style="color:#175cd3;font-weight:700;text-decoration:none">${title}</a><br><a class="artifact-link" href="${href}" target="_blank" rel="noopener noreferrer" style="margin-top:6px">논문/원문 열기 ↗</a>`;
+  });
+}
+
+linkReferencePapers();
 loadOfficialProgress();
