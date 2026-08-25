@@ -16,7 +16,6 @@
 ### 2026-08-25 추가 — 업로드형 사이트 운영 방식
 
 - 사용자는 GitHub 파일을 하나씩 직접 열어보는 방식보다 VCAT 경진대회 사이트처럼 브라우저에서 Phase별 가이드와 결과물을 보는 방식을 선호함.
-- 로그인 기능은 필요 없음.
 - 각 Phase 작업 완료 후 결과를 GitHub에 업로드하고, 사이트가 해당 결과 링크와 공식 상태를 표시하는 방식으로 운영하기로 함.
 - 신규 파일:
   - `cmp-microled-guide/progress.json` — Phase별 공식 상태 및 artifact 목록
@@ -25,6 +24,18 @@
 - `pending / in-progress / complete / blocked` 상태를 사용함.
 - 결과물이 업로드되고 Gate를 통과해야 `complete`로 처리함.
 - 사용자가 ChatGPT에 결과 파일을 보내고 “P# 결과 업로드해줘”라고 요청하면, 검토 후 artifact 업로드 + progress 갱신하는 방식이 기본 워크플로우임.
+
+### 2026-08-25 추가 — GitHub 로그인/제출 센터
+
+- 사용자가 사이트에서 직접 Phase별 결과 제출 위치로 이동할 수 있도록 `결과 제출 센터`를 추가함.
+- 상단과 제출 센터에 `GitHub 로그인` 버튼 추가.
+- P0~P9 각각 `cmp-microled-guide/submissions/P#/` 제출 폴더 생성.
+- 사이트에서 Phase, 결과 제목, 첨부 예정 파일, 결과 설명/코드/로그를 입력할 수 있음.
+- `파일·Excel·이미지 GitHub 업로드` 버튼은 선택 Phase의 GitHub 공식 upload 화면으로 연결.
+- `텍스트 결과 파일 만들기`는 Phase별 GitHub new-file 화면을 열고 제출 템플릿을 클립보드에 복사함.
+- GitHub Pages는 정적 사이트이므로 GitHub 비밀번호/PAT/token을 코드에 저장하지 않음. 실제 인증과 파일 저장은 GitHub 공식 화면에서 수행.
+- 관련 파일: `submit.css`, `submit.js`.
+- 논문 traceability 표에는 정확한 논문 제목과 DOI/원문 링크를 추가함. 사용자가 PDF를 제공하면 공개 재배포 가능 여부를 확인한 뒤 내부 PDF 링크로 교체 가능.
 
 ### 현재 공식 연구 방향
 
@@ -53,17 +64,17 @@
 - Liu et al. (2025), Light: Science & Applications — sidewall damage/passivation review, physical damage vs effective influence width
 - David (2021), Physical Review Applied — carrier-density-dependent lateral diffusion + representative ABC set
 - Park et al. (2022), Nanoscale Research Letters — ABC→effective SRV methodology; AlGaInP 수치는 InGaN에 직접 이식 금지
-- Bulashevich & Karpov (2018), Photonics — InGaN modeling SRV order-of-magnitude reference
+- Bulashevich, Konoplev & Karpov (2018), Photonics — III-nitride micro-LED modeling / size effect reference
 - Wang et al. (2026), Applied Physics Letters — recent chemical etching + dielectric passivation + APSYS scope check
 
 ### 다음 작업 / blocker
 
-1. GitHub Pages 배포 활성화 여부 확인. 현재 connector에서는 Pages 설정 변경 기능이 없음.
-2. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
-3. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
-4. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
-5. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
-6. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
+1. Sentaurus T-2022.03에서 SurfaceSRH syntax/단위 확인
+2. 2D integrated recombination, terminal current, AreaFactor의 정확한 단위 확인
+3. polarization implementation의 설치 버전 예제/매뉴얼 근거 확보
+4. Wong(2019) calibration dataset과 Ley(2020) independent validation dataset의 full numeric extraction
+5. Phase 0부터 실제 실행 시작 후 `progress.json` 및 artifact 링크 업데이트
+6. 사용자가 제공할 논문 PDF를 검토해 사이트 문헌 링크 및 Phase별 근거 위치를 정교화
 
 ### 주의
 
