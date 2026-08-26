@@ -142,3 +142,79 @@
 
 - 실험 calibration 없이 `KOH 시간/농도 → SRV`, `ALD 두께 → Dit/SRV`를 정량 1:1 매핑하지 말 것.
 - 예상과 다른 결과가 나오면 파라미터를 억지로 바꾸지 말고 Gate fail로 기록하고 원인을 추적할 것.
+
+---
+
+## 2026-08-26 — ChatGPT · 기준 소자 재검증 및 가이드라인 v1.1
+
+### 사용자의 요청
+
+- 상용 AI/AR 글래스 회사의 비공개 구조를 추정하지 말고, 공개 논문에 TCAD 구현값이 충분히 나온 InGaN/GaN Micro-LED를 기준 소자로 잡을 것.
+- 대화 중 판단보다 GitHub 가이드라인을 우선하고, 가이드라인 변경은 충분히 재검토한 뒤에만 수행할 것.
+
+### 3개 축으로 재검토한 결론
+
+1. **주제 정합성**: 기존 CMP 공식 방향은 AR/VR용 InGaN/GaN blue Micro-LED의 ICP-RIE sidewall damage → wet treatment + ALD passivation이다. 이 방향은 유지해야 함.
+2. **TCAD 직접성**: Wu et al. (2023)은 AR glasses 응용을 명시하고 10 µm TCAD Micro-LED의 n-GaN, 4× InGaN/GaN MQW, doping, 5 nm sidewall acceptor-like trap region, polarization/trapping/recombination physics를 직접 제시하므로 기존 Wong-only execution proxy보다 primary TCAD physics reference로 더 직접적임.
+3. **재현성/과장 방지**: Wu 2023은 p-GaN thickness, complete contact geometry, exact Sentaurus trap set, simulator vendor가 현재 확인 범위에서 완전히 공개되지 않았으므로 “Sentaurus 그대로 복제 가능한 완전한 deck”으로 취급하면 안 됨. Wong/Shin 값을 무표시로 합쳐서도 안 됨.
+
+### 검증된 R10 — Wu et al. (2023)
+
+- 논문: Zhuang Wu et al., *Physical mechanisms on the size-effect in GaN-based Micro-LEDs*, Micro and Nanostructures 177, 207542 (2023), DOI 10.1016/j.micrna.2023.207542.
+- ScienceDirect 공식 본문 페이지에서 직접 확인:
+  - 10 µm device.
+  - n-GaN 3.9 µm, Si 5×10^18 cm^-3.
+  - 4× InGaN/GaN MQW.
+  - In composition 0.08.
+  - InGaN QW 3 nm / GaN barrier 8 nm.
+  - p-GaN Mg 2×10^19 cm^-3.
+  - acceptor-like traps within 5 nm of both sidewall edges.
+  - piezoelectric polarization, Mg incomplete ionization, local-electric-field-related trapping, Radiative/SRH/Auger models.
+  - AR glasses를 응용 예로 명시.
+- 현재 미확정:
+  - p-GaN thickness.
+  - complete contact dimensions.
+  - exact sidewall trap baseline density/energy/capture set for Sentaurus.
+  - 사용 TCAD vendor가 Sentaurus인지 여부.
+
+### 공식 역할 변경
+
+- **R10 Wu 2023** = Primary 10 µm TCAD physics/device baseline.
+- **R1 Shin 2024** = 실제 10 µm passivation/leakage experimental benchmark.
+- **R2/R3 Wong 2018/2019** = auxiliary full-epi + wet/ALD trend reference.
+- **R9 Wang 2026** = final 1–5 µm scaling / close-competitor validation.
+- 기존 `CMP_PIN_DIODE_Copy1` = P1 pipeline prototype only. 최종 Micro-LED 소자가 아님.
+
+### P1에서 새로 확인된 reverse leakage sensitivity
+
+- 기존 GaN/Nitride donor trap 3×10^13 cm^-2 case: `|Irev(-3V)| = 8.85×10^-15 A`.
+- no-trap case: `|Irev(-3V)| = 1.68×10^-14 A`.
+- 즉 기존 trap을 제거했을 때 leakage가 약 1.9배 증가함.
+- 따라서 기존 donor trap set은 Micro-LED dry-etch sidewall damage parameter로 사용하지 않기로 확정.
+
+### GitHub 변경
+
+- `GUIDELINE.md` → v1.1로 갱신.
+  - 공식 연구 주제를 wet + ALD sidewall healing과 다시 직접 연결.
+  - R10을 Phase 2 primary TCAD baseline으로 지정.
+  - Shin/Wong/Wu 역할 분리 및 논문값 무표시 혼용 금지 추가.
+  - “TCAD 논문 = Sentaurus” 추정 금지 추가.
+  - 기존 PiN을 pipeline prototype으로 명시.
+- `PARAMETER_MASTER.md` 갱신.
+  - R10 직접값과 미확정값 분리.
+  - 기존 PiN trap sensitivity 결과 기록.
+  - Shin 95.8%를 의무 fitting target이 아닌 experimental benchmark로 재정의.
+- `PAPER_INDEX.md`에 R10 추가.
+
+### 다음 단계
+
+1. Gate 1 잔여 항목(mesh refinement ≤5%, cylindrical current normalization 최종 정리)을 마무리.
+2. 동시에 P2 spec-preparation 시작: R10의 p-GaN thickness/contact/trap sweep 원값 추가 추적.
+3. `P2_SPEC.md`에서 Wu 직접값 / 보조 문헌값 / 모델 가정을 완전히 분리.
+4. 필요한 값이 잠긴 뒤 새 프로젝트 `CMP_MICROLED_BASELINE`에서 10 µm ideal/no-sidewall-damage InGaN/GaN MQW baseline부터 구현.
+
+### 불변 규칙
+
+- 앞으로 대화 중 새로운 제안이 GitHub `GUIDELINE.md`와 충돌하면 즉시 코드로 반영하지 않는다.
+- 먼저 근거를 검증하고, 가이드라인을 수정할 충분한 이유가 있을 때만 문서를 갱신한 뒤 다음 작업을 진행한다.
+- 미확정값은 사용자의 승인 없이 논문값처럼 확정하지 않는다.
