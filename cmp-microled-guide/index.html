@@ -74,12 +74,12 @@
             <label for="submitPhase">1. 제출 Phase</label>
             <select id="submitPhase">
               <option value="P0">P0 · 환경·논문·단위 잠금</option>
-              <option value="P1">P1 · GaN PiN 기준 소자</option>
-              <option value="P2">P2 · InGaN/GaN MQW LED baseline</option>
+              <option value="P1">P1 · GaN PiN 파이프라인 기준 소자</option>
+              <option value="P2">P2 · 10 µm InGaN/GaN MQW baseline</option>
               <option value="P3">P3 · Polarization + Recombination physics</option>
               <option value="P4">P4 · Size scaling / 2D normalization</option>
               <option value="P5">P5 · Model A · Surface-only</option>
-              <option value="P6">P6 · Model B · Finite damaged region</option>
+              <option value="P6">P6 · Model B · Finite damaged region / trap</option>
               <option value="P7">P7 · Calibration · Validation</option>
               <option value="P8">P8 · Sidewall-Quality Design Window</option>
               <option value="P9">P9 · Wet/ALD 해석 · 최종 패키지</option>
@@ -118,7 +118,7 @@
       <h2>출처 태그</h2>
       <div class="chips">
         <span class="chip source">원문 확인</span>
-        <span class="chip source2">원문 초록 확인</span>
+        <span class="chip source2">출판사/원문 페이지 확인</span>
         <span class="chip assumption">모델 가정</span>
         <span class="chip manual">Manual 확인 필요</span>
         <span class="chip calibration">실험 calibration 필요</span>
@@ -151,20 +151,21 @@
 
     <section id="references">
       <h2>논문 → 가이드라인 Traceability</h2>
-      <p class="section-intro">논문 제목을 누르면 원문/DOI 페이지가 열립니다. 나중에 네가 PDF를 보내주면 공개 가능한 것은 사이트 내부 PDF 링크로 바꿀 수 있습니다.</p>
+      <p class="section-intro">기준 소자와 공정 benchmark의 역할을 분리합니다. 서로 다른 논문의 값을 무표시로 합쳐 한 논문 구조라고 부르지 않습니다.</p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>ID</th><th>문헌</th><th>사용 위치</th></tr></thead>
           <tbody>
-            <tr><td>R1</td><td><a class="paper-link" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">Study of Double-Layer Passivation Effects in InGaN-based Blue Micro LEDs</a><div class="paper-actions"><a class="paper-badge" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">GIST 원문 ↗</a></div></td><td>실제 baseline geometry, size series, leakage/J-L/passivation trend, conceptual process</td></tr>
-            <tr><td>R2</td><td><a class="paper-link" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">High efficiency of III-nitride micro-light-emitting diodes by sidewall passivation using atomic layer deposition</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">DOI ↗</a></div></td><td>InGaN/GaN MQW 실행 proxy, ALD passivation trend</td></tr>
-            <tr><td>R3</td><td><a class="paper-link" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">Size-independent peak efficiency of III-nitride micro-light-emitting-diodes using chemical treatment and sidewall passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">DOI ↗</a></div></td><td>size-dependent chemical treatment + ALD calibration 후보</td></tr>
-            <tr><td>R4</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">Revealing the importance of light extraction efficiency in InGaN/GaN microLEDs via chemical treatment and dielectric passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">DOI ↗</a></div></td><td>독립 validation / treated-device size trend / LEE 주의</td></tr>
-            <tr><td>R5</td><td><a class="paper-link" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">Advanced technologies in InGaN micro-LED fabrication to mitigate the sidewall effect</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">DOI ↗</a></div></td><td>damage depth vs effective influence width, wet removal vs surface passivation 분류</td></tr>
-            <tr><td>R6</td><td><a class="paper-link" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">Long-Range Carrier Diffusion in (In,Ga)N Quantum Wells and Implications from Fundamentals to Devices</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">DOI ↗</a></div></td><td>carrier-density-dependent diffusion, representative ABC sensitivity</td></tr>
-            <tr><td>R7</td><td><a class="paper-link" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">Understanding the Sidewall Passivation Effects in AlGaInP/GaInP Micro-LED</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">DOI ↗</a></div></td><td>ABC→effective SRV extraction 방법론, J@peak 분석. AlGaInP 수치 직접 이식 금지</td></tr>
-            <tr><td>R8</td><td><a class="paper-link" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">Effect of Die Shape and Size on Performance of III-Nitride Micro-LEDs: A Modeling Study</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">DOI ↗</a></div></td><td>InGaN modeling / size effect / 모델링 참고</td></tr>
-            <tr><td>R9</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">Optoelectronic performance enhancement of 1–5 μm InGaN-based micro-LEDs using chemical etching coupled with dielectric passivation</a><div class="paper-actions"><a class="paper-badge" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">DOI ↗</a></div></td><td>최신 scope check: chemical etching + dielectric passivation + APSYS 선행 연구 확인</td></tr>
+            <tr><td>R1</td><td><a class="paper-link" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">Study of Double-Layer Passivation Effects in InGaN-based Blue Micro LEDs</a></td><td>실제 10 µm geometry/process, -3 V leakage, ALD Al₂O₃ + PECVD passivation benchmark</td></tr>
+            <tr><td>R2</td><td><a class="paper-link" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">High efficiency of III-nitride micro-light-emitting diodes by sidewall passivation using atomic layer deposition</a></td><td>상세 full-epi/MQW auxiliary reference, ALD passivation trend</td></tr>
+            <tr><td>R3</td><td><a class="paper-link" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">Size-independent peak efficiency of III-nitride micro-light-emitting-diodes using chemical treatment and sidewall passivation</a></td><td>chemical treatment + ALD calibration 후보</td></tr>
+            <tr><td>R4</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">Revealing the importance of light extraction efficiency in InGaN/GaN microLEDs via chemical treatment and dielectric passivation</a></td><td>독립 validation / treated-device size trend / LEE 주의</td></tr>
+            <tr><td>R5</td><td><a class="paper-link" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">Advanced technologies in InGaN micro-LED fabrication to mitigate the sidewall effect</a></td><td>damage depth vs effective influence width, wet removal/passivation 분류</td></tr>
+            <tr><td>R6</td><td><a class="paper-link" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">Long-Range Carrier Diffusion in (In,Ga)N Quantum Wells and Implications from Fundamentals to Devices</a></td><td>carrier-density-dependent diffusion, representative ABC sensitivity</td></tr>
+            <tr><td>R7</td><td><a class="paper-link" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">Understanding the Sidewall Passivation Effects in AlGaInP/GaInP Micro-LED</a></td><td>ABC→effective SRV extraction 방법론; AlGaInP 수치 직접 이식 금지</td></tr>
+            <tr><td>R8</td><td><a class="paper-link" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">Effect of Die Shape and Size on Performance of III-Nitride Micro-LEDs: A Modeling Study</a></td><td>3D/size/current-crowding modeling 참고</td></tr>
+            <tr><td>R9</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">Optoelectronic performance enhancement of 1–5 μm InGaN-based micro-LEDs using chemical etching coupled with dielectric passivation</a></td><td>1–5 µm final scaling, APSYS sidewall-defect model, close competitor</td></tr>
+            <tr><td><strong>R10</strong></td><td><a class="paper-link" href="https://doi.org/10.1016/j.micrna.2023.207542" target="_blank" rel="noopener"><strong>Physical mechanisms on the size-effect in GaN-based Micro-LEDs</strong></a></td><td><strong>Primary 10 µm TCAD physics/device baseline: 3.9 µm n-GaN, 4× In₀.₀₈GaN/GaN MQW 3/8 nm, p/n doping, 5 nm sidewall-trap region</strong></td></tr>
           </tbody>
         </table>
       </div>
@@ -172,7 +173,7 @@
 
     <section class="final-note">
       <h2>프로젝트 성공의 정의</h2>
-      <p>특정 KOH 시간이나 Al₂O₃ 두께를 “맞히는 것”이 아닙니다. <strong>소자가 작아질수록 carrier가 sidewall에서 어디로 손실되는지, 검증된 모델로 그 손실을 어느 수준까지 줄여야 하는지 재현 가능하게 제시하는 것</strong>이 최종 목표입니다.</p>
+      <p>상용 AR 글래스의 비공개 구조를 추정하거나 원하는 그래프에 값을 맞추는 것이 아닙니다. <strong>공개 문헌 기반 10 µm InGaN/GaN 기준 소자에서 sidewall loss를 검증하고, wet chemical treatment + ALD passivation이 요구되는 범위를 재현 가능하게 제시한 뒤 검증된 모델만 4–5 µm 영역으로 확장하는 것</strong>이 최종 목표입니다.</p>
     </section>
   </main>
 
@@ -180,7 +181,7 @@
     <div class="wrap"><span>CMP Micro-LED Sidewall TCAD Research Guide</span><span>Source-traceable · Gate-based · Upload-driven</span></div>
   </footer>
 
-  <script src="app.js?v=20260825-light2"></script>
+  <script src="app.js?v=20260826-r10"></script>
   <script src="submit.js?v=20260825-submit1"></script>
 </body>
 </html>
