@@ -64,6 +64,8 @@ const statusLabel = {
   blocked: '중단/확인 필요'
 };
 
+const codeKinds = ['cmd', 'code', 'par', 'tcl', 'py', 'plt'];
+
 function artifactHTML(items = []) {
   if (!items.length) return '<p class="artifact-empty">아직 공식 업로드 결과물이 없습니다.</p>';
   return `<div class="artifact-list">${items.map(a => `<a class="artifact-link" href="${a.path}" target="_blank" rel="noopener">${a.label || a.path}</a>`).join('')}</div>`;
@@ -74,6 +76,59 @@ function detailFilesHTML(files = []) {
   return files.map(f => `<a class="detail-file kind-${f.kind || 'record'}" href="${f.path}" target="_blank" rel="noopener">${f.label || f.path}</a>`).join('');
 }
 
+function hasCode(files = []) {
+  return files.some(f => codeKinds.includes(f.kind));
+}
+
+function findSubunit(id) {
+  if (!id) return null;
+  for (const items of Object.values(detailManifest.phases || {})) {
+    const found = items.find(item => item.id === id);
+    if (found) return found;
+  }
+  return null;
+}
+
+function codeState(item) {
+  const files = item.files || [];
+  const policy = item.codePolicy || (item.codeRequired === false ? 'none' : 'required');
+
+  if (policy === 'none') {
+    return {
+      className: 'na',
+      text: 'CODE 불필요',
+      style: '',
+      warning: '',
+      sharedLink: ''
+    };
+  }
+
+  if (policy === 'shared') {
+    const source = findSubunit(item.sharedFrom);
+    const sourceHasCode = source ? hasCode(source.files || []) : false;
+    return {
+      className: sourceHasCode ? 'ok' : 'missing',
+      text: sourceHasCode ? `CODE 공유 · ${item.sharedFrom}` : `공유원 CODE 미첨부 · ${item.sharedFrom || '?'}`,
+      style: sourceHasCode
+        ? 'color:#6941c6;border-color:#d2c2f4;background:#f5f3ff'
+        : 'color:#b54708;border-color:#fed7aa;background:#fff7ed',
+      warning: sourceHasCode
+        ? `별도 중복 업로드 없이 ${item.sharedFrom}의 실제 실행 Command를 참조합니다.`
+        : `이 소단원은 별도 코드 업로드가 필요하지 않지만, 공유 원본 ${item.sharedFrom || ''}에 실제 실행 Command가 먼저 첨부되어야 합니다.`,
+      sharedLink: item.sharedFrom ? `<a class="detail-file" href="#subunit-${item.sharedFrom}">공유 코드 원본 · ${item.sharedFrom}</a>` : ''
+    };
+  }
+
+  const ownHasCode = hasCode(files);
+  return {
+    className: ownHasCode ? 'ok' : 'missing',
+    text: ownHasCode ? 'CODE 첨부' : 'CODE 미첨부',
+    style: '',
+    warning: ownHasCode ? '' : '실제 실행 Command를 회수하면 이 소단원에 연결해야 재현 가능한 상태가 됩니다.',
+    sharedLink: ''
+  };
+}
+
 function subunitHTML(phaseId) {
   const items = detailManifest.phases?.[phaseId] || [];
   if (!items.length) return '<p class="artifact-empty">세부 소단원 manifest가 아직 없습니다.</p>';
@@ -82,18 +137,16 @@ function subunitHTML(phaseId) {
     <div class="subunit-head">
       <div>
         <h4>세부 진행 사항</h4>
-        <p>각 소단원에서 실제 기록 파일을 직접 열 수 있습니다. TCAD 실행 소단원은 Command 첨부가 완료 조건입니다.</p>
+        <p>CODE 필요 / CODE 공유 / CODE 불필요를 구분합니다. 같은 deck은 한 번만 보관하고 관련 소단원에서 원본을 참조합니다.</p>
       </div>
       <a class="btn small" href="CODE_ARCHIVE_POLICY.md" target="_blank" rel="noopener">코드 보관 규칙</a>
     </div>
     <div class="subunit-grid">
       ${items.map(item => {
         const files = item.files || [];
-        const hasCode = files.some(f => ['cmd','code','par','tcl','py','plt'].includes(f.kind));
-        const codeClass = !item.codeRequired ? 'na' : (hasCode ? 'ok' : 'missing');
-        const codeText = !item.codeRequired ? 'CODE 해당 없음' : (hasCode ? 'CODE 첨부' : 'CODE 미첨부');
+        const state = codeState(item);
         return `
-          <section class="subunit-card status-${item.status || 'pending'}">
+          <section id="subunit-${item.id}" class="subunit-card status-${item.status || 'pending'}">
             <div class="subunit-top">
               <div>
                 <div class="subunit-id">${item.id}</div>
@@ -101,12 +154,12 @@ function subunitHTML(phaseId) {
               </div>
               <div class="subunit-badges">
                 <span class="status-badge ${item.status || 'pending'}">${statusLabel[item.status] || item.status || '대기'}</span>
-                <span class="code-badge ${codeClass}">${codeText}</span>
+                <span class="code-badge ${state.className}"${state.style ? ` style="${state.style}"` : ''}>${state.text}</span>
               </div>
             </div>
             <p class="subunit-summary">${item.summary || ''}</p>
-            <div class="detail-files">${detailFilesHTML(files)}</div>
-            ${item.codeRequired && !hasCode ? '<div class="code-warning">실제 실행 Command를 회수하면 이 소단원에 연결해야 완료 기록이 재현 가능한 상태가 됩니다.</div>' : ''}
+            <div class="detail-files">${detailFilesHTML(files)}${state.sharedLink}</div>
+            ${state.warning ? `<div class="code-warning">${state.warning}</div>` : ''}
           </section>`;
       }).join('')}
     </div>`;
