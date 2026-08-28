@@ -7,6 +7,7 @@
 2026-08-28에 서버 `CMP_PIN_DIODE`에서 command/parameter/SVisual 관련 text files 15개를 별도 recovery archive로 회수하고 SHA256을 검증했다.
 
 - recovery record: `P0-02/README.md`
+- upload/integrity verification: `P0-02/P0_UPLOAD_VERIFICATION.md`
 - per-file SHA256: `P0-02/P0_FILE_SHA256_MANIFEST.md`
 - P0→P1 comparison: `P0-02/P0_TO_P1_DIFF.md`
 - original path list/checksums: `P0-02/recovery/`
