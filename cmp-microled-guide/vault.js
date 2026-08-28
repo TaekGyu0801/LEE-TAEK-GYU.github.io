@@ -167,9 +167,22 @@
     });
   }
 
+  function addCodeHubButton(){
+    const actions = document.querySelector('.hero-actions');
+    if (!actions || document.getElementById('tcadCodeHubBtn')) return;
+    const link = document.createElement('a');
+    link.id = 'tcadCodeHubBtn';
+    link.className = 'btn';
+    link.href = '../cmp-microled-code/';
+    link.textContent = '⌘ TCAD 코드 모음';
+    link.title = '실제 회수·검증한 .cmd / .par / .tcl 코드 전용 페이지';
+    actions.insertBefore(link, actions.querySelector('.login-btn'));
+  }
+
   function init(){
     makeSidebar();
     makeModal();
+    addCodeHubButton();
     addPhaseVaultButtons();
     document.getElementById('vaultRefreshBtn')?.addEventListener('click', () => loadFiles(currentKey));
     const phaseList = document.getElementById('phaseList');
