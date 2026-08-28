@@ -1,0 +1,79 @@
+{
+  "updated": "2026-08-28",
+  "title": "CMP Micro-LED TCAD Code Hub",
+  "environment": "Sentaurus T-2022.03",
+  "verification": "Research-modified canonical/history files listed here were recovered from the TCAD server and verified against the recovery archive. P0 unchanged vendor example source is not republished.",
+  "groups": [
+    {
+      "id": "01",
+      "phase": "P1-01",
+      "title": "GaN PiN Baseline · Forward",
+      "status": "verified",
+      "note": "P0 official GaN PiN example에서 0 V equilibrium snapshot 출력을 추가한 P1 forward deck.",
+      "files": [
+        {"name":"sd_fdiv_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-01/commands/sd_fdiv_des.cmd","state":"canonical","verified":true}
+      ]
+    },
+    {
+      "id": "02",
+      "phase": "P1-02",
+      "title": "Mesh Refinement",
+      "status": "verified",
+      "note": "Refined mesh 생성과 동일 조건 forward run. 핵심 I-V mesh sensitivity 검증에 사용.",
+      "files": [
+        {"name":"p1_refined_dvs.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_dvs.cmd","state":"canonical","verified":true},
+        {"name":"p1_refined_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_des.cmd","state":"canonical","verified":true}
+      ]
+    },
+    {
+      "id": "03",
+      "phase": "P1-04",
+      "title": "Reverse Leakage · Trap Sanity",
+      "status": "verified",
+      "note": "기존 GaN/Nitride donor trap 유무만 바꾼 controlled comparison. 이 trap set은 최종 Micro-LED sidewall damage 값으로 승계하지 않음.",
+      "files": [
+        {"name":"cmp_leakage_run.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_leakage_run.cmd","state":"canonical","verified":true},
+        {"name":"cmp_notrap_run.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_notrap_run.cmd","state":"canonical","verified":true}
+      ]
+    },
+    {
+      "id": "04",
+      "phase": "P2-03",
+      "title": "Mg Incomplete-Ionization Calibration",
+      "status": "in-progress",
+      "note": "p-GaN Mg incomplete-ionization calibration용 equilibrium/SDE/parameter/postprocess 세트.",
+      "files": [
+        {"name":"IgVg_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/IgVg_des.cmd","state":"canonical","verified":true},
+        {"name":"sde_mg_sweep_template.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_sweep_template.cmd","state":"canonical","verified":true},
+        {"name":"sde_mg_9p59e18.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_9p59e18.cmd","state":"canonical","verified":true},
+        {"name":"sdevice_mg_model.par","type":"Parameter","path":"cmp-microled-guide/tcad-vault/P2/P2-03/parameters/sdevice_mg_model.par","state":"canonical","verified":true},
+        {"name":"extract_hdensity_n62.tcl","type":"SVisual/Tcl","path":"cmp-microled-guide/tcad-vault/P2/P2-03/postprocess/extract_hdensity_n62.tcl","state":"postprocess","verified":true}
+      ]
+    },
+    {
+      "id": "05",
+      "phase": "P2-04",
+      "title": "Micro-LED Baseline Development",
+      "status": "development",
+      "note": "중요: 현재 회수본은 10-QW / InGaN XFraction=0.18 개발 중간본이며 최종 Wu-2023 기반 4-QW / In0.08 baseline이 아님.",
+      "files": [
+        {"name":"sde_mqw10_dev_20260827.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sde_mqw10_dev_20260827.cmd","state":"development","verified":true},
+        {"name":"sd_forward_mqw10_dev_20260827.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sd_forward_mqw10_dev_20260827.cmd","state":"development","verified":true},
+        {"name":"sdevice_mg_model.par","type":"Parameter","path":"cmp-microled-guide/tcad-vault/P2/P2-04/parameters/sdevice_mg_model.par","state":"development","verified":true}
+      ]
+    },
+    {
+      "id": "06",
+      "phase": "P2-04 history",
+      "title": "Micro-LED Development History",
+      "status": "history",
+      "note": "의미 있는 중간 실행본만 보존. 최종 실행용이 아니라 변경 원인과 개발 계보 확인용.",
+      "files": [
+        {"name":"01_p3a_mg_baseline_ok_sde.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/01_p3a_mg_baseline_ok_sde.cmd","state":"history","verified":true},
+        {"name":"02_before_p3c_mqw_clean_sde.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/02_before_p3c_mqw_clean_sde.cmd","state":"history","verified":true},
+        {"name":"03_before_p3c_mqw_forward.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/03_before_p3c_mqw_forward.cmd","state":"history","verified":true},
+        {"name":"04_before_ii_scope_fix_forward.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/04_before_ii_scope_fix_forward.cmd","state":"history","verified":true}
+      ]
+    }
+  ]
+}
