@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>CMP Micro-LED TCAD Code Hub</title>
 <meta name="description" content="CMP InGaN/GaN Micro-LED Sentaurus TCAD command, parameter and Tcl code collection" />
 <style>
-:root{--bg:#f6f8fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e5e9f0;--blue:#2457d6;--blue2:#eef4ff;--green:#087443;--greenbg:#ecfdf3;--orange:#b54708;--orangebg:#fff7ed;--purple:#6941c6;--purplebg:#f5f3ff;--shadow:0 10px 30px rgba(16,24,40,.06)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}.hero{padding:54px 0 32px;background:linear-gradient(135deg,#eef4ff 0%,#fff 58%,#f5f3ff 100%);border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--blue);text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.12;margin:10px 0 12px}.lead{max-width:850px;color:#475467;font-size:17px;margin:0}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid #cfd7e6;border-radius:10px;background:#fff;color:#344054;text-decoration:none;padding:10px 14px;font-weight:750;font-size:14px;cursor:pointer}.btn:hover{border-color:#9eb3df;transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}main{padding:32px 0 70px}.notice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:24px}.notice strong{color:#101828}.warning{border-left:4px solid #f79009;background:#fffbf4}.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--line);background:#fff}.badge.ok{color:var(--green);background:var(--greenbg);border-color:#abefc6}.badge.dev{color:var(--orange);background:var(--orangebg);border-color:#fed7aa}.badge.history{color:var(--purple);background:var(--purplebg);border-color:#d9d6fe}.toolbar{display:flex;gap:10px;align-items:center;margin:24px 0 18px}.search{flex:1;border:1px solid #d0d5dd;border-radius:10px;padding:11px 13px;font-size:15px;background:#fff}.count{font-size:13px;color:var(--muted);white-space:nowrap}.group{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);margin:0 0 18px;overflow:hidden}.group-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);display:flex;gap:18px;justify-content:space-between;align-items:flex-start}.group-kicker{font-size:12px;font-weight:850;color:var(--blue);letter-spacing:.06em}.group h2{margin:4px 0 4px;font-size:21px}.group-note{margin:0;color:var(--muted);font-size:14px;max-width:800px}.file-list{padding:8px 14px 14px}.file{border:1px solid transparent;border-radius:12px;padding:12px 10px}.file+.file{border-top-color:#edf0f4;border-top-left-radius:0;border-top-right-radius:0}.file-top{display:flex;gap:12px;justify-content:space-between;align-items:center}.file-name{font-family:"Cascadia Code","SFMono-Regular",Consolas,monospace;font-size:14px;font-weight:700;overflow-wrap:anywhere}.file-sub{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}.mini{font-size:11px;font-weight:800;color:#475467;background:#f2f4f7;border-radius:6px;padding:2px 6px}.mini.verified{color:var(--green);background:var(--greenbg)}.file-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}.smallbtn{border:1px solid #d0d5dd;border-radius:8px;background:#fff;color:#344054;padding:7px 9px;font-size:12px;font-weight:750;text-decoration:none;cursor:pointer}.smallbtn:hover{background:#f9fafb}.codebox{display:none;margin-top:11px;background:#101828;color:#e4e7ec;border-radius:10px;padding:14px;max-height:520px;overflow:auto;font-family:"Cascadia Code","SFMono-Regular",Consolas,monospace;font-size:12px;line-height:1.55;white-space:pre}.codebox.open{display:block}.empty{padding:40px;text-align:center;color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px}.footlinks{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:8px}.footlinks a{color:var(--blue);text-decoration:none;font-weight:750}@media(max-width:700px){.group-head,.file-top{flex-direction:column}.file-actions{justify-content:flex-start}.toolbar{align-items:stretch;flex-direction:column}.count{white-space:normal}}
+:root{--bg:#f6f8fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e5e9f0;--blue:#2457d6;--green:#087443;--greenbg:#ecfdf3;--orange:#b54708;--orangebg:#fff7ed;--purple:#6941c6;--purplebg:#f5f3ff;--shadow:0 10px 30px rgba(16,24,40,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}.hero{padding:54px 0 32px;background:linear-gradient(135deg,#eef4ff 0%,#fff 58%,#f5f3ff 100%);border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--blue);text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.12;margin:10px 0 12px}.lead{max-width:850px;color:#475467;font-size:17px;margin:0}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid #cfd7e6;border-radius:10px;background:#fff;color:#344054;text-decoration:none;padding:10px 14px;font-weight:750;font-size:14px;cursor:pointer}.btn:hover{border-color:#9eb3df;transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}main{padding:32px 0 70px}.notice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:24px}.warning{border-left:4px solid #f79009;background:#fffbf4}.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--line);background:#fff}.badge.ok{color:var(--green);background:var(--greenbg);border-color:#abefc6}.badge.dev{color:var(--orange);background:var(--orangebg);border-color:#fed7aa}.badge.history{color:var(--purple);background:var(--purplebg);border-color:#d9d6fe}.toolbar{display:flex;gap:10px;align-items:center;margin:24px 0 18px}.search{flex:1;border:1px solid #d0d5dd;border-radius:10px;padding:11px 13px;font-size:15px;background:#fff}.count{font-size:13px;color:var(--muted);white-space:nowrap}.group{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);margin:0 0 18px;overflow:hidden}.group-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);display:flex;gap:18px;justify-content:space-between;align-items:flex-start}.group-kicker{font-size:12px;font-weight:850;color:var(--blue);letter-spacing:.06em}.group h2{margin:4px 0;font-size:21px}.group-note{margin:0;color:var(--muted);font-size:14px;max-width:800px}.file-list{padding:8px 14px 14px}.file{border:1px solid transparent;border-radius:12px;padding:12px 10px}.file+.file{border-top-color:#edf0f4;border-top-left-radius:0;border-top-right-radius:0}.file-top{display:flex;gap:12px;justify-content:space-between;align-items:center}.file-name{font-family:"Cascadia Code","SFMono-Regular",Consolas,monospace;font-size:14px;font-weight:700;overflow-wrap:anywhere}.file-sub{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}.mini{font-size:11px;font-weight:800;color:#475467;background:#f2f4f7;border-radius:6px;padding:2px 6px}.mini.verified{color:var(--green);background:var(--greenbg)}.file-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}.smallbtn{border:1px solid #d0d5dd;border-radius:8px;background:#fff;color:#344054;padding:7px 9px;font-size:12px;font-weight:750;text-decoration:none;cursor:pointer}.smallbtn:hover{background:#f9fafb}.codebox{display:none;margin-top:11px;background:#101828;color:#e4e7ec;border-radius:10px;padding:14px;max-height:520px;overflow:auto;font-family:"Cascadia Code","SFMono-Regular",Consolas,monospace;font-size:12px;line-height:1.55;white-space:pre}.codebox.open{display:block}.codebox.loading{color:#b2ccff}.codebox.error{color:#fecdca}.empty{padding:40px;text-align:center;color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px}.footlinks{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:8px}.footlinks a{color:var(--blue);text-decoration:none;font-weight:750}@media(max-width:700px){.group-head,.file-top{flex-direction:column}.file-actions{justify-content:flex-start}.toolbar{align-items:stretch;flex-direction:column}.count{white-space:normal}}
 </style>
 </head>
 <body>
@@ -25,7 +26,7 @@
 <main class="wrap">
   <section class="notice">
     <strong>코드 검증 상태</strong><br>
-    이 페이지에 등록된 연구 수정본/개발 이력은 2026-08-28 서버 recovery archive와 대조한 파일입니다. 원본 recovery에서 canonical/history/postprocess로 선별된 17개 파일은 byte-level 검증을 완료했습니다.
+    이 페이지에 등록된 연구 수정본/개발 이력은 2026-08-28 서버 recovery archive와 대조한 파일입니다. canonical/history/postprocess로 선별된 17개 파일은 byte-level 검증을 완료했습니다.
     <div class="meta-row"><span class="badge ok">✓ Recovery 검증</span><span class="badge">Sentaurus T-2022.03</span><span class="badge">Canonical 우선</span></div>
   </section>
   <section class="notice warning">
@@ -33,7 +34,6 @@
     P0의 <code>CMP_PIN_DIODE</code>는 설치된 Synopsys 공식 예제의 무수정 원본이므로 공개 저장소에 전체 source를 재배포하지 않습니다. 대신 파일 목록·SHA256·P0→P1 diff를 보존합니다. P1/P2에서 연구자가 수정·실행한 코드는 이 페이지에서 직접 열 수 있습니다.
     <div class="meta-row"><a class="btn" href="../cmp-microled-guide/tcad-vault/P0/P0-02/README.md">P0 Recovery 기록</a><a class="btn" href="../cmp-microled-guide/tcad-vault/P0/P0-02/P0_TO_P1_DIFF.md">P0 → P1 Diff</a></div>
   </section>
-
   <div class="toolbar"><input id="search" class="search" type="search" placeholder="파일명, Phase, SDE, SDevice, Mg, trap 검색" /><div id="count" class="count">불러오는 중…</div></div>
   <div id="groups"><div class="empty">코드 목록 불러오는 중…</div></div>
 </main>
@@ -46,45 +46,57 @@ const groupsEl=document.getElementById('groups');
 const searchEl=document.getElementById('search');
 const countEl=document.getElementById('count');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-function statusBadge(s){
- if(s==='verified') return '<span class="badge ok">검증됨</span>';
- if(s==='development'||s==='in-progress') return '<span class="badge dev">개발 중</span>';
- return '<span class="badge history">History</span>';
-}
+function statusBadge(s){if(s==='verified')return '<span class="badge ok">검증됨</span>';if(s==='development'||s==='in-progress')return '<span class="badge dev">개발 중</span>';return '<span class="badge history">History</span>'}
 function gh(path){return `https://github.com/${repo}/blob/${branch}/${path}`}
 function raw(path){return `https://raw.githubusercontent.com/${repo}/${branch}/${path}`}
-function local(path){return `../${path}`}
+function api(path){return `https://api.github.com/repos/${repo}/contents/${path.split('/').map(encodeURIComponent).join('/')}?ref=${branch}`}
 function render(q=''){
- const query=q.trim().toLowerCase(); let visibleFiles=0; let html='';
+ const query=q.trim().toLowerCase();let visibleFiles=0;let html='';
  for(const g of manifest.groups){
-   const files=g.files.filter(f=>!query || `${g.phase} ${g.title} ${g.note} ${f.name} ${f.type} ${f.state}`.toLowerCase().includes(query));
-   if(!files.length) continue; visibleFiles+=files.length;
-   html+=`<section class="group"><div class="group-head"><div><div class="group-kicker">CASE ${esc(g.id)} · ${esc(g.phase)}</div><h2>${esc(g.title)}</h2><p class="group-note">${esc(g.note)}</p></div>${statusBadge(g.status)}</div><div class="file-list">`;
-   for(const f of files){
-     html+=`<article class="file" data-path="${esc(f.path)}"><div class="file-top"><div><div class="file-name">${esc(f.name)}</div><div class="file-sub"><span class="mini">${esc(f.type)}</span><span class="mini">${esc(f.state)}</span>${f.verified?'<span class="mini verified">byte verified</span>':''}</div></div><div class="file-actions"><button class="smallbtn view" type="button">코드 펼치기</button><button class="smallbtn copy" type="button">복사</button><a class="smallbtn" href="${gh(f.path)}" target="_blank" rel="noopener">GitHub ↗</a><a class="smallbtn" href="${raw(f.path)}" target="_blank" rel="noopener">Raw ↗</a></div></div><pre class="codebox">코드 불러오는 중…</pre></article>`;
-   }
-   html+='</div></section>';
+  const files=g.files.filter(f=>!query||`${g.phase} ${g.title} ${g.note} ${f.name} ${f.type} ${f.state}`.toLowerCase().includes(query));
+  if(!files.length)continue;visibleFiles+=files.length;
+  html+=`<section class="group"><div class="group-head"><div><div class="group-kicker">CASE ${esc(g.id)} · ${esc(g.phase)}</div><h2>${esc(g.title)}</h2><p class="group-note">${esc(g.note)}</p></div>${statusBadge(g.status)}</div><div class="file-list">`;
+  for(const f of files){html+=`<article class="file" data-path="${esc(f.path)}"><div class="file-top"><div><div class="file-name">${esc(f.name)}</div><div class="file-sub"><span class="mini">${esc(f.type)}</span><span class="mini">${esc(f.state)}</span>${f.verified?'<span class="mini verified">byte verified</span>':''}</div></div><div class="file-actions"><button class="smallbtn view" type="button">코드 펼치기</button><button class="smallbtn copy" type="button">복사</button><a class="smallbtn" href="${gh(f.path)}" target="_blank" rel="noopener">GitHub ↗</a><a class="smallbtn" href="${raw(f.path)}" target="_blank" rel="noopener">Raw ↗</a></div></div><pre class="codebox"></pre></article>`}
+  html+='</div></section>';
  }
  groupsEl.innerHTML=html||'<div class="empty">검색 결과가 없습니다.</div>';
  countEl.textContent=`표시 코드 ${visibleFiles}개 · 전체 ${manifest.groups.reduce((n,g)=>n+g.files.length,0)}개`;
  wire();
 }
+function decodeBase64Utf8(value){const binary=atob(value.replace(/\s/g,''));const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return new TextDecoder('utf-8').decode(bytes)}
 async function getCode(article){
  const box=article.querySelector('.codebox');
- if(box.dataset.loaded==='1') return box.textContent;
+ if(box.dataset.loaded==='1')return box.textContent;
  const path=article.dataset.path;
- const r=await fetch(local(path),{cache:'no-store'});
- if(!r.ok) throw new Error(`HTTP ${r.status}`);
- const text=await r.text(); box.textContent=text; box.dataset.loaded='1'; return text;
+ box.classList.add('open','loading');box.classList.remove('error');box.textContent='코드 불러오는 중…';
+ try{
+  const r=await fetch(`${raw(path)}?v=${Date.now()}`,{cache:'no-store'});
+  if(r.ok){const text=await r.text();box.textContent=text;box.dataset.loaded='1';box.classList.remove('loading');return text}
+ }catch(e){}
+ try{
+  const r=await fetch(`${api(path)}&v=${Date.now()}`,{cache:'no-store',headers:{'Accept':'application/vnd.github+json'}});
+  if(!r.ok)throw new Error(`GitHub API HTTP ${r.status}`);
+  const data=await r.json();
+  const text=data.encoding==='base64'?decodeBase64Utf8(data.content||''):String(data.content||'');
+  if(!text)throw new Error('empty content');
+  box.textContent=text;box.dataset.loaded='1';box.classList.remove('loading');return text;
+ }catch(e){box.classList.remove('loading');box.classList.add('error');box.textContent=`코드를 자동으로 불러오지 못했습니다.\n오른쪽의 GitHub 또는 Raw 버튼으로 열어 주세요.\n\n오류: ${e.message}`;throw e}
 }
 function wire(){
- document.querySelectorAll('.file').forEach(a=>{
-   a.querySelector('.view')?.addEventListener('click',async e=>{const box=a.querySelector('.codebox'); if(box.classList.contains('open')){box.classList.remove('open');e.currentTarget.textContent='코드 펼치기';return;} try{await getCode(a);box.classList.add('open');e.currentTarget.textContent='코드 접기';}catch(err){box.textContent='코드를 불러오지 못했습니다. GitHub/Raw 버튼을 사용해 주세요.';box.classList.add('open');}});
-   a.querySelector('.copy')?.addEventListener('click',async e=>{try{const text=await getCode(a);await navigator.clipboard.writeText(text);const old=e.currentTarget.textContent;e.currentTarget.textContent='복사됨 ✓';setTimeout(()=>e.currentTarget.textContent=old,1200);}catch(err){e.currentTarget.textContent='복사 실패';}});
+ document.querySelectorAll('.file').forEach(article=>{
+  const view=article.querySelector('.view');const copy=article.querySelector('.copy');const box=article.querySelector('.codebox');
+  view?.addEventListener('click',async()=>{
+   if(box.classList.contains('open')&&box.dataset.loaded==='1'){box.classList.remove('open');view.textContent='코드 펼치기';return}
+   box.classList.add('open');view.textContent='코드 접기';try{await getCode(article)}catch(e){}
+  });
+  copy?.addEventListener('click',async()=>{try{const text=await getCode(article);await navigator.clipboard.writeText(text);copy.textContent='복사됨 ✓';setTimeout(()=>copy.textContent='복사',1200)}catch(e){copy.textContent='복사 실패';setTimeout(()=>copy.textContent='복사',1500)}});
  });
 }
-fetch('code-manifest.json',{cache:'no-store'}).then(r=>r.json()).then(m=>{manifest=m;render();}).catch(()=>groupsEl.innerHTML='<div class="empty">code-manifest.json을 불러오지 못했습니다.</div>');
+async function init(){
+ try{const r=await fetch(`code-manifest.json?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);manifest=await r.json();render()}catch(e){groupsEl.innerHTML=`<div class="empty">코드 목록을 불러오지 못했습니다.<br>${esc(e.message)}</div>`}
+}
 searchEl.addEventListener('input',()=>manifest&&render(searchEl.value));
+init();
 </script>
 </body>
 </html>
