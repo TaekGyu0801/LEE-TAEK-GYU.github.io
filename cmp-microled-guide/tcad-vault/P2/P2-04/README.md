@@ -31,4 +31,11 @@ Server projects inspected:
 3. current SDE: 10-QW InGaN/GaN geometry와 MQW refinement window 추가.
 4. forward SDevice: interface donor trap 제거 → InGaN mole fraction 0.18 추가 → incomplete ionization scope를 global에서 GaN material scope로 제한.
 
-Historical files의 원본 SHA256은 root recovery manifest에 남기며, canonical 폴더에는 현재 development command만 저장한다. 이 command를 P2-06 final lock 또는 후속 P3의 기준으로 자동 승격하지 않는다.
+## 보존한 의미 있는 개발 이력
+
+- `history/01_p3a_mg_baseline_ok_sde.cmd` — Mg 9.59e18 적용 + Nitride passivation이 남아 있던 체크포인트. 원본 SHA256 `9d004dd25052b989aa789aeb7eaf99d2e318c34fd2ed1418de4b4b607984c1bd`.
+- `history/02_before_p3c_mqw_clean_sde.cmd` — passivation을 제거한 pre-MQW clean structure. SHA256 `aea889f714afd7060515b19ddf21321b473799bf3220f5a34b2c0596b6fa385b`.
+- `history/03_before_p3c_mqw_forward.cmd` — InGaN mole-fraction block 추가 전 forward physics checkpoint. SHA256 `fe0500deade75f5fd26a03a6179b9e31957d8dd2b516520d6fea53bfe2bf7d64`.
+- `history/04_before_ii_scope_fix_forward.cmd` — InGaN XFraction=0.18은 추가되었지만 incomplete ionization이 아직 global scope였던 checkpoint. SHA256 `50f1e1362d50ba27eb972709e9b70da2027b7c4855e9262d246a75a1254f7cd2`.
+
+현재 canonical development command는 `commands/`에, 변화 원인을 보존할 필요가 있는 중간 실행본만 `history/`에 둔다. 이 command를 P2-06 final lock 또는 후속 P3의 기준으로 자동 승격하지 않는다.
