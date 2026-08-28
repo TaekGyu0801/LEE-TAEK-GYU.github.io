@@ -14,6 +14,7 @@ Server source project: `CMP_P2_MG_CALIBRATION`
 - `commands/sde_mg_sweep_template.cmd`: `@NMg@` parameter를 받는 SDE sweep template.
 - `commands/sde_mg_9p59e18.cmd`: Mg = `9.59e18 cm^-3`로 고정한 회수본.
 - `parameters/sdevice_mg_model.par`: 현재 calibration에 사용된 Model-B 계열 Mg incomplete-ionization parameter (`E0=0.20 eV`, `alpha=8e-9`, `g=4`, `Xsec=1e-14`).
+- `postprocess/extract_hdensity_n62.tcl`: `n62_des.tdr`에서 X≈0.05 위치의 `hDensity`를 추출한 실제 S-Visual/Tcl 후처리 스크립트. SHA256 `6086479dd2dabd3244007a0096943b2c03fe76b6f30e5f7ae1e7340743c0ee67`.
 
 ## 실제 Workbench instantiated node 확인
 
