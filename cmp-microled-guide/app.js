@@ -55,6 +55,7 @@ const list = document.getElementById('phaseList');
 const progressBar = document.getElementById('progressBar');
 const progressText = document.getElementById('progressText');
 let official = { updated: '', phases: {} };
+let detailManifest = { rules: {}, phases: {} };
 
 const statusLabel = {
   pending: '대기',
@@ -66,6 +67,49 @@ const statusLabel = {
 function artifactHTML(items = []) {
   if (!items.length) return '<p class="artifact-empty">아직 공식 업로드 결과물이 없습니다.</p>';
   return `<div class="artifact-list">${items.map(a => `<a class="artifact-link" href="${a.path}" target="_blank" rel="noopener">${a.label || a.path}</a>`).join('')}</div>`;
+}
+
+function detailFilesHTML(files = []) {
+  if (!files.length) return '<span class="detail-no-files">연결된 파일 없음</span>';
+  return files.map(f => `<a class="detail-file kind-${f.kind || 'record'}" href="${f.path}" target="_blank" rel="noopener">${f.label || f.path}</a>`).join('');
+}
+
+function subunitHTML(phaseId) {
+  const items = detailManifest.phases?.[phaseId] || [];
+  if (!items.length) return '<p class="artifact-empty">세부 소단원 manifest가 아직 없습니다.</p>';
+
+  return `
+    <div class="subunit-head">
+      <div>
+        <h4>세부 진행 사항</h4>
+        <p>각 소단원에서 실제 기록 파일을 직접 열 수 있습니다. TCAD 실행 소단원은 Command 첨부가 완료 조건입니다.</p>
+      </div>
+      <a class="btn small" href="CODE_ARCHIVE_POLICY.md" target="_blank" rel="noopener">코드 보관 규칙</a>
+    </div>
+    <div class="subunit-grid">
+      ${items.map(item => {
+        const files = item.files || [];
+        const hasCode = files.some(f => ['cmd','code','par','tcl','py','plt'].includes(f.kind));
+        const codeClass = !item.codeRequired ? 'na' : (hasCode ? 'ok' : 'missing');
+        const codeText = !item.codeRequired ? 'CODE 해당 없음' : (hasCode ? 'CODE 첨부' : 'CODE 미첨부');
+        return `
+          <section class="subunit-card status-${item.status || 'pending'}">
+            <div class="subunit-top">
+              <div>
+                <div class="subunit-id">${item.id}</div>
+                <h5>${item.title}</h5>
+              </div>
+              <div class="subunit-badges">
+                <span class="status-badge ${item.status || 'pending'}">${statusLabel[item.status] || item.status || '대기'}</span>
+                <span class="code-badge ${codeClass}">${codeText}</span>
+              </div>
+            </div>
+            <p class="subunit-summary">${item.summary || ''}</p>
+            <div class="detail-files">${detailFilesHTML(files)}</div>
+            ${item.codeRequired && !hasCode ? '<div class="code-warning">실제 실행 Command를 회수하면 이 소단원에 연결해야 완료 기록이 재현 가능한 상태가 됩니다.</div>' : ''}
+          </section>`;
+      }).join('')}
+    </div>`;
 }
 
 function render() {
@@ -83,11 +127,12 @@ function render() {
         </div>
         <div class="phase-body">
           ${p.body}
+          ${subunitHTML(p.id)}
           <h4>공식 진행 기록</h4>
           <p>${meta.note || '아직 기록 없음.'}</p>
-          <h4>업로드된 결과물</h4>
+          <h4>Phase 대표 결과물</h4>
           ${artifactHTML(meta.artifacts)}
-          <p class="phase-links"><a class="btn small" href="GUIDELINE.md">전체 Run Sheet</a><a class="btn small" href="UPLOAD_GUIDE.md">결과 업로드 방법</a></p>
+          <p class="phase-links"><a class="btn small" href="GUIDELINE.md">전체 Run Sheet</a><a class="btn small" href="UPLOAD_GUIDE.md">결과 업로드 방법</a><a class="btn small" href="CODE_ARCHIVE_POLICY.md">코드 보관 규칙</a></p>
         </div>
       </article>`;
   }).join('');
@@ -110,13 +155,18 @@ function updateProgress() {
   progressText.textContent = `${pct}% · 완료 ${done}/${phases.length}${active ? ` · 진행 ${active}` : ''}`;
 }
 
-async function loadOfficialProgress() {
+async function loadDashboardData() {
   try {
-    const res = await fetch(`progress.json?v=${Date.now()}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    official = await res.json();
+    const [progressRes, detailRes] = await Promise.all([
+      fetch(`progress.json?v=${Date.now()}`, { cache: 'no-store' }),
+      fetch(`phase-details.json?v=${Date.now()}`, { cache: 'no-store' })
+    ]);
+    if (!progressRes.ok) throw new Error(`progress HTTP ${progressRes.status}`);
+    official = await progressRes.json();
+    if (detailRes.ok) detailManifest = await detailRes.json();
+    else console.warn(`phase-details HTTP ${detailRes.status}`);
   } catch (err) {
-    console.warn('progress.json을 불러오지 못했습니다.', err);
+    console.warn('대시보드 데이터를 불러오지 못했습니다.', err);
     official = { updated: '', phases: {} };
   }
   render();
@@ -148,4 +198,4 @@ function linkReferencePapers() {
 }
 
 linkReferencePapers();
-loadOfficialProgress();
+loadDashboardData();
