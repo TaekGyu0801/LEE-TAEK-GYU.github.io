@@ -18,7 +18,21 @@ CMP TCAD 프로젝트에서 실제 실행한 Sentaurus command 파일은 연구 
 - 파일명에는 Phase, 목적, 버전 또는 날짜를 포함한다.
 - 발표 Appendix에는 이 archive의 실제 command 내용을 사용한다.
 - ChatGPT가 대화에서 코드 블록을 제안했다는 사실만으로는 GitHub 백업 완료로 간주하지 않는다. 실제 실행본 또는 사용자가 실제 사용했다고 확인한 최종 코드를 저장해야 한다.
+- 동일 파일/Workbench 자동생성 duplicate는 canonical copy 하나만 두고 SHA256/provenance로 추적한다.
+- 공개 저장소에는 `ORIGINAL/` vendor example 사본이나 불필요한 설치 예제 복제본을 무작정 올리지 않는다. 연구자가 수정·실행한 command와 재현에 필요한 provenance를 우선한다.
 
 ## 현재 상태 — 2026-08-28
 
-현재 저장소 검색 기준으로 실제 `.cmd` 원본 파일 백업은 확인되지 않았다. 기존 GitHub에는 환경/검증 결과/파라미터/가이드 문서가 주로 저장되어 있다. 이후부터 실제 실행 command를 전달받는 즉시 해당 Phase의 command archive에 함께 저장한다.
+실제 서버 command recovery를 수행했다.
+
+- 원본 회수 archive: `CMP_COMMAND_BACKUP_20260828.tar.gz`
+- 회수된 text command/parameter/script: 71 files
+- reviewed manifest: `2026-08-28_COMMAND_RECOVERY_MANIFEST.md`
+- canonical command 보관 시작:
+  - `P1/P1-01/commands/`
+  - `P1/P1-02/commands/`
+  - `P1/P1-04/commands/`
+  - `P2/P2-03/commands/`, `parameters/`
+  - `P2/P2-04/commands/`, `parameters/`
+
+서버 프로젝트의 숫자 이름을 공식 Phase 번호로 자동 해석하지 않는다. 예를 들어 `CMP_P3_BASELINE_MICROLED` 회수본은 검토 결과 공식 **P2-04 baseline development history**로 분류되었다.
