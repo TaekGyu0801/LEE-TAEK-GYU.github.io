@@ -2,219 +2,77 @@
   "updated": "2026-08-28",
   "title": "CMP Micro-LED TCAD Code Hub",
   "environment": "Sentaurus T-2022.03",
-  "summary": "Professor-facing execution map. Phase → Subunit → Tool / key parameters / executable files.",
-  "fileCount": 17,
-  "phases": [
+  "verification": "Research-modified canonical/history files listed here were recovered from the TCAD server and verified against the recovery archive. P0 unchanged vendor example source is not republished.",
+  "groups": [
     {
-      "id": "P0",
-      "title": "Environment & Official Reference",
-      "status": "complete",
-      "note": "공식 GaN PiN 예제로 실행 환경과 기준 동작을 확인한 단계입니다.",
-      "subunits": [
-        {
-          "id": "P0-02",
-          "title": "GaN PiN 공식 예제 원본 재현",
-          "status": "complete",
-          "purpose": "Synopsys 공식 GaN PiN 예제를 무수정 재실행해 기준 동작을 확인합니다.",
-          "tools": ["Sentaurus Workbench", "SDE", "SDevice", "S-Visual"],
-          "parameters": [
-            "Source: installed Synopsys GaN PiN example",
-            "Unmodified vendor source",
-            "Public repo에는 원본 source 대신 SHA / file list / P0→P1 diff만 보존"
-          ],
-          "execution": ["Vendor example project 실행", "Forward / reverse 기준 동작 확인"],
-          "files": [],
-          "records": [
-            {"label":"P0 Recovery 기록","path":"cmp-microled-guide/tcad-vault/P0/P0-02/README.md"},
-            {"label":"P0 → P1 Diff","path":"cmp-microled-guide/tcad-vault/P0/P0-02/P0_TO_P1_DIFF.md"},
-            {"label":"P0 File SHA256 Manifest","path":"cmp-microled-guide/tcad-vault/P0/P0-02/P0_FILE_SHA256_MANIFEST.md"}
-          ]
-        }
+      "id": "01",
+      "phase": "P1-01",
+      "title": "GaN PiN Baseline · Forward",
+      "status": "verified",
+      "note": "P0 official GaN PiN example에서 0 V equilibrium snapshot 출력을 추가한 P1 forward deck.",
+      "files": [
+        {"name":"sd_fdiv_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-01/commands/sd_fdiv_des.cmd","state":"canonical","verified":true}
       ]
     },
     {
-      "id": "P1",
-      "title": "GaN PiN Pipeline Validation",
-      "status": "complete",
-      "note": "최종 Micro-LED 전에 SDE→SDevice→I-V 파이프라인, mesh, reverse sensitivity를 검증한 단계입니다.",
-      "subunits": [
-        {
-          "id": "P1-01",
-          "title": "PiN baseline 재실행",
-          "status": "complete",
-          "purpose": "공식 예제 기반 PiN을 재실행하고 0 V equilibrium snapshot을 추가한 연구 baseline입니다.",
-          "tools": ["SDevice"],
-          "parameters": [
-            "Structure / base parameter: P0 vendor example과 동일",
-            "Geometry mode: 2D cylindrical",
-            "Added output: 0 V equilibrium snapshot"
-          ],
-          "execution": ["P0 vendor SDE/mesh 준비", "sd_fdiv_des.cmd 실행 → forward I-V + equilibrium snapshot"],
-          "files": [
-            {"name":"sd_fdiv_des.cmd","type":"SDevice","role":"Forward baseline","path":"cmp-microled-guide/tcad-vault/P1/P1-01/commands/sd_fdiv_des.cmd","state":"canonical","verified":true}
-          ],
-          "records": [
-            {"label":"Command recovery note","path":"cmp-microled-guide/tcad-vault/P1/P1-01/README.md"},
-            {"label":"Gate 1 validation","path":"cmp-microled-guide/tcad-vault/P1/2026-08-26_P1_Gate1_validation.md"}
-          ]
-        },
-        {
-          "id": "P1-02",
-          "title": "Mesh refinement",
-          "status": "complete",
-          "purpose": "같은 구조/physics에서 mesh만 세분화해 핵심 I-V 민감도를 확인합니다.",
-          "tools": ["SDE", "SDevice"],
-          "parameters": [
-            "Baseline mesh: 3,728 vertices / 7,054 elements",
-            "Refined mesh: 9,991 vertices / 19,291 elements",
-            "Gate criterion: core I-V change ≤ 5%"
-          ],
-          "execution": ["p1_refined_dvs.cmd → refined mesh 생성", "p1_refined_des.cmd → 동일 forward I-V 재실행", "Baseline vs refined 비교"],
-          "files": [
-            {"name":"p1_refined_dvs.cmd","type":"SDE","role":"Refined mesh generation","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_dvs.cmd","state":"canonical","verified":true},
-            {"name":"p1_refined_des.cmd","type":"SDevice","role":"Refined forward run","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_des.cmd","state":"canonical","verified":true}
-          ],
-          "records": [
-            {"label":"Mesh command note","path":"cmp-microled-guide/tcad-vault/P1/P1-02/README.md"},
-            {"label":"Mesh / I-V validation","path":"cmp-microled-guide/tcad-vault/P1/2026-08-26_P1_Gate1_validation.md"}
-          ]
-        },
-        {
-          "id": "P1-03",
-          "title": "Forward I-V analysis",
-          "status": "shared",
-          "purpose": "P1-01의 동일 baseline deck 결과를 분석합니다. 별도 중복 command는 없습니다.",
-          "tools": ["SDevice result analysis"],
-          "parameters": ["Shared deck: P1-01 sd_fdiv_des.cmd"],
-          "execution": ["P1-01 결과 재사용", "Forward I-V / fixed-current voltage shift 분석"],
-          "sharedFrom": "P1-01",
-          "files": [],
-          "records": [{"label":"Forward I-V validation","path":"cmp-microled-guide/tcad-vault/P1/2026-08-26_P1_Gate1_validation.md"}]
-        },
-        {
-          "id": "P1-04",
-          "title": "Reverse I-V / trap sanity",
-          "status": "complete",
-          "purpose": "기존 GaN/Nitride donor interface trap의 유무만 바꿔 reverse leakage sensitivity를 확인합니다.",
-          "tools": ["SDevice"],
-          "parameters": [
-            "Reverse comparison: −3 V",
-            "Donor Conc = 3×10^13 cm^-2",
-            "EnergyMid = 0.36 eV from midgap",
-            "eXsection = 1×10^-30 cm²",
-            "hXsection = 1×10^-14 cm²",
-            "이 trap set은 최종 Micro-LED dry-etch damage parameter로 승계하지 않음"
-          ],
-          "execution": ["cmp_leakage_run.cmd → trap ON", "cmp_notrap_run.cmd → trap OFF", "|Irev| @ −3 V 비교"],
-          "files": [
-            {"name":"cmp_leakage_run.cmd","type":"SDevice","role":"Reverse · trap ON","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_leakage_run.cmd","state":"canonical","verified":true},
-            {"name":"cmp_notrap_run.cmd","type":"SDevice","role":"Reverse · trap OFF","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_notrap_run.cmd","state":"canonical","verified":true}
-          ],
-          "records": [{"label":"Trap sanity note","path":"cmp-microled-guide/tcad-vault/P1/P1-04/README.md"}]
-        },
-        {
-          "id": "P1-05",
-          "title": "Cylindrical current normalization",
-          "status": "shared",
-          "purpose": "P1-01의 동일 cylindrical deck으로 terminal current 해석을 고정합니다.",
-          "tools": ["SDevice result analysis"],
-          "parameters": ["Cylindrical(yAxis=0)", "No additional AreaFactor for P1 terminal current"],
-          "execution": ["P1-01 결과 재사용", "cylindrical terminal current 단위 검증"],
-          "sharedFrom": "P1-01",
-          "files": [],
-          "records": [{"label":"Normalization validation","path":"cmp-microled-guide/tcad-vault/P1/2026-08-26_P1_Gate1_validation.md"}]
-        }
+      "id": "02",
+      "phase": "P1-02",
+      "title": "Mesh Refinement",
+      "status": "verified",
+      "note": "Refined mesh 생성과 동일 조건 forward run. 핵심 I-V mesh sensitivity 검증에 사용.",
+      "files": [
+        {"name":"p1_refined_dvs.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_dvs.cmd","state":"canonical","verified":true},
+        {"name":"p1_refined_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-02/commands/p1_refined_des.cmd","state":"canonical","verified":true}
       ]
     },
     {
-      "id": "P2",
-      "title": "10 µm Micro-LED Baseline Build",
+      "id": "03",
+      "phase": "P1-04",
+      "title": "Reverse Leakage · Trap Sanity",
+      "status": "verified",
+      "note": "기존 GaN/Nitride donor trap 유무만 바꾼 controlled comparison. 이 trap set은 최종 Micro-LED sidewall damage 값으로 승계하지 않음.",
+      "files": [
+        {"name":"cmp_leakage_run.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_leakage_run.cmd","state":"canonical","verified":true},
+        {"name":"cmp_notrap_run.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P1/P1-04/commands/cmp_notrap_run.cmd","state":"canonical","verified":true}
+      ]
+    },
+    {
+      "id": "04",
+      "phase": "P2-03",
+      "title": "Mg Incomplete-Ionization Calibration",
       "status": "in-progress",
-      "note": "문헌 기반 10 µm InGaN/GaN baseline을 구축 중이며, 현재 회수된 MQW10 deck은 개발 이력입니다.",
-      "subunits": [
-        {
-          "id": "P2-03",
-          "title": "Mg incomplete-ionization calibration",
-          "status": "in-progress",
-          "purpose": "300 K p-GaN에서 목표 hole density에 대응하는 Mg active concentration과 incomplete-ionization model을 calibration합니다.",
-          "tools": ["SDE", "SDevice", "Parameter file", "S-Visual / Tcl"],
-          "parameters": [
-            "T = 300 K",
-            "Target p = 3×10^17 cm^-3",
-            "Recovered Mg active concentration = 9.59×10^18 cm^-3",
-            "Model-B: E0 = 0.20 eV",
-            "alpha = 8×10^-9",
-            "g = 4",
-            "Xsec = 1×10^-14"
-          ],
-          "execution": ["sde_mg_sweep_template.cmd 또는 sde_mg_9p59e18.cmd → structure", "IgVg_des.cmd + sdevice_mg_model.par → equilibrium", "extract_hdensity_n62.tcl → hDensity 추출"],
-          "files": [
-            {"name":"sde_mg_sweep_template.cmd","type":"SDE","role":"Mg sweep template","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_sweep_template.cmd","state":"canonical","verified":true},
-            {"name":"sde_mg_9p59e18.cmd","type":"SDE","role":"Mg = 9.59×10^18 cm^-3","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_9p59e18.cmd","state":"canonical","verified":true},
-            {"name":"IgVg_des.cmd","type":"SDevice","role":"Equilibrium carrier calibration","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/IgVg_des.cmd","state":"canonical","verified":true},
-            {"name":"sdevice_mg_model.par","type":"Parameter","role":"Mg incomplete-ionization model","path":"cmp-microled-guide/tcad-vault/P2/P2-03/parameters/sdevice_mg_model.par","state":"canonical","verified":true},
-            {"name":"extract_hdensity_n62.tcl","type":"S-Visual/Tcl","role":"hDensity extraction","path":"cmp-microled-guide/tcad-vault/P2/P2-03/postprocess/extract_hdensity_n62.tcl","state":"postprocess","verified":true}
-          ],
-          "records": [
-            {"label":"Mg command recovery note","path":"cmp-microled-guide/tcad-vault/P2/P2-03/README.md"},
-            {"label":"Mg ionization audit","path":"cmp-microled-guide/tcad-vault/P2/2026-08-27_Mg_ionization_audit.md"}
-          ]
-        },
-        {
-          "id": "P2-04",
-          "title": "Baseline Micro-LED command 구축",
-          "status": "development",
-          "purpose": "10 µm InGaN/GaN Micro-LED 구조와 forward physics를 Sentaurus deck으로 구축하는 개발 단계입니다.",
-          "warning": "현재 회수본은 10-QW / InGaN XFraction=0.18 개발 중간본입니다. 최종 Wu 2023 기반 4-QW / In0.08 baseline이 아닙니다.",
-          "tools": ["SDE", "SDevice", "Parameter file"],
-          "parameters": [
-            "2D cylindrical GaN-based structure",
-            "p-side Mg active = 9.59×10^18 cm^-3",
-            "MQW development geometry = 10 QWs",
-            "QW = 3 nm",
-            "Barrier ≈ 10 nm",
-            "InGaN XFraction = 0.18",
-            "Recombination = SRH + Auger + Radiative",
-            "GaN incomplete ionization enabled"
-          ],
-          "execution": ["sde_mqw10_dev_20260827.cmd → MQW structure / mesh", "sd_forward_mqw10_dev_20260827.cmd + sdevice_mg_model.par → forward run"],
-          "files": [
-            {"name":"sde_mqw10_dev_20260827.cmd","type":"SDE","role":"Current MQW10 development structure","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sde_mqw10_dev_20260827.cmd","state":"development","verified":true},
-            {"name":"sd_forward_mqw10_dev_20260827.cmd","type":"SDevice","role":"Current MQW10 forward physics","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sd_forward_mqw10_dev_20260827.cmd","state":"development","verified":true},
-            {"name":"sdevice_mg_model.par","type":"Parameter","role":"Mg model parameter","path":"cmp-microled-guide/tcad-vault/P2/P2-04/parameters/sdevice_mg_model.par","state":"development","verified":true}
-          ],
-          "history": [
-            {"name":"01_p3a_mg_baseline_ok_sde.cmd","type":"SDE","role":"Mg 9.59e18 + Nitride checkpoint","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/01_p3a_mg_baseline_ok_sde.cmd","state":"history","verified":true},
-            {"name":"02_before_p3c_mqw_clean_sde.cmd","type":"SDE","role":"Pre-MQW clean structure","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/02_before_p3c_mqw_clean_sde.cmd","state":"history","verified":true},
-            {"name":"03_before_p3c_mqw_forward.cmd","type":"SDevice","role":"Before InGaN mole-fraction block","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/03_before_p3c_mqw_forward.cmd","state":"history","verified":true},
-            {"name":"04_before_ii_scope_fix_forward.cmd","type":"SDevice","role":"Before incomplete-ionization scope fix","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/04_before_ii_scope_fix_forward.cmd","state":"history","verified":true}
-          ],
-          "records": [{"label":"Baseline development recovery note","path":"cmp-microled-guide/tcad-vault/P2/P2-04/README.md"}]
-        },
-        {
-          "id": "P2-05",
-          "title": "Baseline run & convergence",
-          "status": "shared",
-          "purpose": "P2-04에서 구축한 동일 baseline deck으로 equilibrium / forward convergence를 확인합니다.",
-          "tools": ["SDE", "SDevice"],
-          "parameters": ["Shared deck: P2-04", "Final baseline lock 전 단계"],
-          "execution": ["P2-04 deck 재사용", "band / carrier / recombination sanity 확인"],
-          "sharedFrom": "P2-04",
-          "files": [],
-          "records": []
-        },
-        {
-          "id": "P2-06",
-          "title": "Baseline validation & lock",
-          "status": "pending",
-          "purpose": "최종 Wu-based baseline 결과를 문헌 benchmark와 비교하고 ideal/no-damage reference를 잠급니다.",
-          "tools": ["SDE", "SDevice", "Result validation"],
-          "parameters": ["Target final reference: Wu 2023 4-QW / In0.08", "현재 P2-04 development deck을 그대로 final로 사용하지 않음"],
-          "execution": ["Final baseline 확정 후 P2-04 계열 deck 갱신", "문헌 benchmark validation", "Ideal/no-damage lock"],
-          "sharedFrom": "P2-04",
-          "files": [],
-          "records": []
-        }
+      "note": "p-GaN Mg incomplete-ionization calibration용 equilibrium/SDE/parameter/postprocess 세트.",
+      "files": [
+        {"name":"IgVg_des.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/IgVg_des.cmd","state":"canonical","verified":true},
+        {"name":"sde_mg_sweep_template.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_sweep_template.cmd","state":"canonical","verified":true},
+        {"name":"sde_mg_9p59e18.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-03/commands/sde_mg_9p59e18.cmd","state":"canonical","verified":true},
+        {"name":"sdevice_mg_model.par","type":"Parameter","path":"cmp-microled-guide/tcad-vault/P2/P2-03/parameters/sdevice_mg_model.par","state":"canonical","verified":true},
+        {"name":"extract_hdensity_n62.tcl","type":"SVisual/Tcl","path":"cmp-microled-guide/tcad-vault/P2/P2-03/postprocess/extract_hdensity_n62.tcl","state":"postprocess","verified":true}
+      ]
+    },
+    {
+      "id": "05",
+      "phase": "P2-04",
+      "title": "Micro-LED Baseline Development",
+      "status": "development",
+      "note": "중요: 현재 회수본은 10-QW / InGaN XFraction=0.18 개발 중간본이며 최종 Wu-2023 기반 4-QW / In0.08 baseline이 아님.",
+      "files": [
+        {"name":"sde_mqw10_dev_20260827.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sde_mqw10_dev_20260827.cmd","state":"development","verified":true},
+        {"name":"sd_forward_mqw10_dev_20260827.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/commands/sd_forward_mqw10_dev_20260827.cmd","state":"development","verified":true},
+        {"name":"sdevice_mg_model.par","type":"Parameter","path":"cmp-microled-guide/tcad-vault/P2/P2-04/parameters/sdevice_mg_model.par","state":"development","verified":true}
+      ]
+    },
+    {
+      "id": "06",
+      "phase": "P2-04 history",
+      "title": "Micro-LED Development History",
+      "status": "history",
+      "note": "의미 있는 중간 실행본만 보존. 최종 실행용이 아니라 변경 원인과 개발 계보 확인용.",
+      "files": [
+        {"name":"01_p3a_mg_baseline_ok_sde.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/01_p3a_mg_baseline_ok_sde.cmd","state":"history","verified":true},
+        {"name":"02_before_p3c_mqw_clean_sde.cmd","type":"SDE","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/02_before_p3c_mqw_clean_sde.cmd","state":"history","verified":true},
+        {"name":"03_before_p3c_mqw_forward.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/03_before_p3c_mqw_forward.cmd","state":"history","verified":true},
+        {"name":"04_before_ii_scope_fix_forward.cmd","type":"SDevice","path":"cmp-microled-guide/tcad-vault/P2/P2-04/history/04_before_ii_scope_fix_forward.cmd","state":"history","verified":true}
       ]
     }
   ]
