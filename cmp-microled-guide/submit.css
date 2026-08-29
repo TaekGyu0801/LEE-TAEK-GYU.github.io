@@ -17,4 +17,19 @@
   line-height:1.9;
 }
 
+/* professor-facing wording: keep content clear without labeling it as 'easy' */
+#workflow .section-head p{display:none}
+#phaseList>.gate>strong{font-size:0}
+#phaseList>.gate>strong::after{content:"연구 단계 요약";font-size:16px}
+#workflow .toggle{font-size:0;min-width:88px}
+#workflow .toggle::after{content:"상세 내용";font-size:13px}
+#workflow .phase-card.open .toggle::after{content:"접기"}
+#workflow .phase-body>div[style*="padding:14px"]>strong{font-size:0}
+#workflow .phase-body>div[style*="padding:14px"]>strong::after{content:"핵심 내용";font-size:13px}
+#workflow .subunit-head h4{font-size:0}
+#workflow .subunit-head h4::after{content:"세부 소단원";font-size:16px}
+#workflow .subunit-head p{display:none}
+#workflow .subunit-card div[style*="margin:10px"] strong{font-size:0}
+#workflow .subunit-card div[style*="margin:10px"] strong::after{content:"핵심 내용";font-size:12px}
+
 @media(max-width:760px){.submission-grid{grid-template-columns:1fr}.field.full{grid-column:1}.submission-head{flex-direction:column}.rules::before{font-size:14px;line-height:1.8;padding:17px 18px}}
