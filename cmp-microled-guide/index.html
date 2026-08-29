@@ -13,11 +13,11 @@
     <div class="wrap">
       <div class="eyebrow">CMP · InGaN/GaN BLUE MICRO-LED · SENTARUS TCAD</div>
       <h1>Micro-LED Sidewall TCAD Research Guide</h1>
-      <p class="lead">AI/AR 글래스용 초소형 InGaN/GaN Micro-LED에서 ICP-RIE 식각으로 발생하는 sidewall defect와 SRH 비방사 재결합을 TCAD로 정량화하고, wet chemical treatment와 ALD passivation으로 reverse leakage current를 줄이며 발광효율과 신뢰성을 높이기 위해 필요한 sidewall-quality 설계 조건을 도출하는 프로젝트입니다.</p>
+      <p class="lead">AR/VR용 초소형 InGaN/GaN Micro-LED에서 식각으로 생긴 측벽 손상이 누설전류와 발광효율에 어떤 영향을 주는지 TCAD로 확인하고, Wet chemical treatment와 ALD passivation이 측벽 문제를 어느 수준까지 개선해야 하는지 설계 기준을 찾는 프로젝트입니다.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#workflow">가이드 시작</a>
         <a class="btn" href="#submit">결과 제출</a>
-        <a class="btn" href="GUIDELINE.md">전체 Run Sheet</a>
+        <a class="btn" href="GUIDELINE.md">전체 실행 순서</a>
         <a class="btn" href="#references">논문 근거</a>
         <button class="btn login-btn" id="githubLoginBtn" type="button">GitHub 로그인 ↗</button>
       </div>
@@ -32,31 +32,31 @@
   <main class="wrap">
     <section class="rules" id="rules">
       <h2>연구 운영 규칙</h2>
-      <p class="section-intro">이 프로젝트에서 “정답”은 예상 그래프가 아니라 <strong>Gate를 통과한 재현 가능한 결과</strong>입니다.</p>
+      <p class="section-intro">이 프로젝트에서 “정답”은 예상 그래프가 아니라 <strong>근거를 확인하고 다시 실행할 수 있는 결과</strong>입니다.</p>
       <div class="grid rules-grid">
-        <article class="rule"><b>01</b><h3>다음 Phase로 성급히 가지 않기</h3><p>현재 Phase의 Gate를 하나라도 통과하지 못하면 다음 물리를 추가하지 않습니다.</p></article>
-        <article class="rule"><b>02</b><h3>모든 숫자에 출처 붙이기</h3><p>논문값, 모델 가정, 실험 calibration 필요 값을 구분합니다.</p></article>
-        <article class="rule"><b>03</b><h3>공정값 ≠ TCAD 파라미터</h3><p>KOH 시간/ALD 두께를 근거 없이 SRV·Dit·damage width로 바꾸지 않습니다.</p></article>
-        <article class="rule"><b>04</b><h3>같은 데이터로 fitting+validation 금지</h3><p>Calibration과 독립 Validation을 분리합니다.</p></article>
-        <article class="rule"><b>05</b><h3>2D의 한계를 숨기지 않기</h3><p>AreaFactor만으로 실제 square pixel의 4개 sidewall이 생기지 않습니다.</p></article>
+        <article class="rule"><b>01</b><h3>다음 단계로 성급히 가지 않기</h3><p>현재 Phase의 통과 조건을 만족하지 못하면 다음 물리를 추가하지 않습니다.</p></article>
+        <article class="rule"><b>02</b><h3>모든 숫자에 출처 붙이기</h3><p>논문값, 프로젝트에서 정한 값, 아직 미확정인 값을 구분합니다.</p></article>
+        <article class="rule"><b>03</b><h3>공정 조건과 TCAD 입력값 구분</h3><p>KOH 시간이나 ALD 두께를 근거 없이 SRV·Dit·손상 폭으로 바로 바꾸지 않습니다.</p></article>
+        <article class="rule"><b>04</b><h3>같은 데이터로 값 결정과 검증을 동시에 하지 않기</h3><p>모델 값을 정할 때 사용한 데이터와, 맞는지 검증할 데이터는 따로 둡니다.</p></article>
+        <article class="rule"><b>05</b><h3>2D 계산의 한계를 숨기지 않기</h3><p>2D 단면은 실제 사각 픽셀의 네 측벽을 모두 직접 표현하지 못합니다.</p></article>
       </div>
     </section>
 
     <section class="upload-flow" id="upload-flow">
       <h2>사이트 사용 방법</h2>
-      <p class="section-intro">경진대회 가이드처럼 사이트에서 현재 해야 할 일을 보고, 완료한 결과를 다시 이 사이트에 쌓아갑니다.</p>
+      <p class="section-intro">사이트에서 현재 해야 할 일을 보고, TCAD를 실행한 뒤 결과와 코드를 다시 해당 Phase에 쌓아가는 방식입니다.</p>
       <div class="flow-row">
-        <div class="flow-step"><b>1</b><span>Phase 열기</span><small>목적·작업·Gate 확인</small></div>
+        <div class="flow-step"><b>1</b><span>Phase 열기</span><small>왜 하는지·무엇을 하는지 확인</small></div>
         <div class="flow-arrow">→</div>
         <div class="flow-step"><b>2</b><span>TCAD 실행</span><small>코드·그래프·CSV 생성</small></div>
         <div class="flow-arrow">→</div>
-        <div class="flow-step"><b>3</b><span>결과 검토</span><small>논리·단위·문헌 대조</small></div>
+        <div class="flow-step"><b>3</b><span>결과 검토</span><small>논리·단위·문헌과 비교</small></div>
         <div class="flow-arrow">→</div>
         <div class="flow-step"><b>4</b><span>GitHub 제출</span><small>Phase 결과물 저장</small></div>
         <div class="flow-arrow">→</div>
-        <div class="flow-step"><b>5</b><span>Gate 통과</span><small>사이트에 완료 표시</small></div>
+        <div class="flow-step"><b>5</b><span>통과 여부 판단</span><small>사이트에 완료 표시</small></div>
       </div>
-      <div class="gate"><strong>운영 원칙</strong> · 제출했다고 바로 완료 처리하지 않습니다. 제출 → 검토 → Gate PASS/수정 필요 순서로 관리합니다.</div>
+      <div class="gate"><strong>운영 원칙</strong> · 파일을 올렸다고 바로 완료 처리하지 않습니다. 제출 → 검토 → 통과/수정 필요 순서로 관리합니다.</div>
     </section>
 
     <section id="submit">
@@ -73,22 +73,22 @@
           <div class="field">
             <label for="submitPhase">1. 제출 Phase</label>
             <select id="submitPhase">
-              <option value="P0">P0 · 환경·논문·단위 잠금</option>
-              <option value="P1">P1 · GaN PiN 파이프라인 기준 소자</option>
-              <option value="P2">P2 · 10 µm InGaN/GaN MQW baseline</option>
-              <option value="P3">P3 · Polarization + Recombination physics</option>
-              <option value="P4">P4 · Size scaling / 2D normalization</option>
-              <option value="P5">P5 · Model A · Surface-only</option>
-              <option value="P6">P6 · Model B · Finite damaged region / trap</option>
-              <option value="P7">P7 · Calibration · Validation</option>
-              <option value="P8">P8 · Sidewall-Quality Design Window</option>
-              <option value="P9">P9 · Wet/ALD 해석 · 최종 패키지</option>
+              <option value="P0">P0 · 연구 준비: 환경·출처·단위 확정</option>
+              <option value="P1">P1 · 기본 GaN 다이오드 동작 확인</option>
+              <option value="P2">P2 · 실제 Micro-LED 기준 소자 만들기</option>
+              <option value="P3">P3 · 발광·손실 물리 넣기</option>
+              <option value="P4">P4 · 픽셀 크기 영향 분리</option>
+              <option value="P5">P5 · 측벽 표면 손상 모델</option>
+              <option value="P6">P6 · 측벽 내부 손상 모델</option>
+              <option value="P7">P7 · 논문과 비교해 모델 검증</option>
+              <option value="P8">P8 · 측벽 품질 설계 범위 찾기</option>
+              <option value="P9">P9 · Wet/ALD 공정으로 연결하고 마무리</option>
             </select>
           </div>
 
           <div class="field">
             <label for="submitTitle">2. 결과 제목</label>
-            <input id="submitTitle" type="text" placeholder="예: P2 baseline IV 및 MQW recombination 결과" />
+            <input id="submitTitle" type="text" placeholder="예: P2 기준 소자 I-V 및 MQW 재결합 결과" />
           </div>
 
           <div class="field full">
@@ -121,51 +121,51 @@
         <span class="chip source2">출판사/원문 페이지 확인</span>
         <span class="chip assumption">모델 가정</span>
         <span class="chip manual">Manual 확인 필요</span>
-        <span class="chip calibration">실험 calibration 필요</span>
+        <span class="chip calibration">실험값과 비교 필요</span>
         <span class="chip project">프로젝트 기준</span>
       </div>
     </section>
 
     <section id="workflow">
       <div class="section-head">
-        <div><h2>Research Phases</h2><p>각 Phase에 공식 상태와 업로드된 결과물이 함께 표시됩니다.</p></div>
+        <div><h2>연구 진행 단계 · P0~P9</h2><p>처음 보는 사람도 이해할 수 있도록 각 Phase에 “쉽게 말하면” 설명과 세부 소단원을 함께 표시합니다.</p></div>
         <a class="btn small" href="#submit">결과 제출하기</a>
       </div>
       <div id="phaseList" class="phase-list"></div>
     </section>
 
     <section class="metrics" id="metrics">
-      <h2>핵심 Output 정의</h2>
-      <p class="section-intro">“IQE가 좋아졌다”라고만 쓰지 않고, 무엇을 계산한 값인지 명시합니다.</p>
+      <h2>핵심 결과값 정의</h2>
+      <p class="section-intro">“효율이 좋아졌다”라고만 쓰지 않고, 실제로 무엇을 계산한 값인지 구분합니다.</p>
       <div class="grid metric-grid">
-        <article class="metric-card"><h3>MQW recombination quality</h3><div class="formula">η<sub>rec</sub> = ∫R<sub>rad</sub>dV / ∫(R<sub>rad</sub>+R<sub>SRH</sub>+R<sub>Auger</sub>)dV</div><p>MQW 내부에서 실제로 재결합한 carrier 중 radiative fraction. <strong>진단용</strong>.</p></article>
-        <article class="metric-card focus"><h3>Current-normalized internal efficiency</h3><div class="formula">η<sub>int,I</sub> = q∫R<sub>rad</sub>dV / I<sub>terminal</sub></div><p>Design Window의 <strong>주 효율 지표</strong>. 2D 단위/AreaFactor 검증 전에는 최종값으로 채택하지 않음.</p></article>
-        <article class="metric-card"><h3>Efficiency penalty</h3><div class="formula">P<sub>η</sub>(L) = [1 − η<sub>case</sub>(L)/η<sub>ref</sub>(L)] × 100%</div><p>반드시 같은 pixel size끼리 비교. 5/10/20% contour를 모두 제시.</p></article>
+        <article class="metric-card"><h3>MQW 안에서 빛으로 재결합한 비율</h3><div class="formula">η<sub>rec</sub> = ∫R<sub>rad</sub>dV / ∫(R<sub>rad</sub>+R<sub>SRH</sub>+R<sub>Auger</sub>)dV</div><p>MQW 내부에서 재결합한 carrier 중 실제 빛을 만드는 방사 재결합의 비율입니다. <strong>진단용</strong>으로 봅니다.</p></article>
+        <article class="metric-card focus"><h3>흘려준 전류를 기준으로 본 내부 발광효율</h3><div class="formula">η<sub>int,I</sub> = q∫R<sub>rad</sub>dV / I<sub>terminal</sub></div><p>최종 설계 범위에서 사용할 <strong>주 효율 지표</strong>입니다. 2D 단위와 AreaFactor를 검증하기 전에는 최종값으로 채택하지 않습니다.</p></article>
+        <article class="metric-card"><h3>기준 소자 대비 효율 저하율</h3><div class="formula">P<sub>η</sub>(L) = [1 − η<sub>case</sub>(L)/η<sub>ref</sub>(L)] × 100%</div><p>반드시 같은 픽셀 크기의 손상 소자와 기준 소자를 비교합니다. 5/10/20% 경계선을 함께 제시합니다.</p></article>
       </div>
     </section>
 
     <section class="warning-box">
-      <h2>10% penalty의 의미</h2>
-      <p><strong>10%는 논문이나 산업에서 정한 universal 표준이 아닙니다.</strong> 본 프로젝트에서 Design Window를 논의하기 위한 primary engineering criterion입니다. 최종 결과에는 5%, 10%, 20% contour를 함께 표시합니다.</p>
+      <h2>10% 효율 저하 기준의 의미</h2>
+      <p><strong>10%는 논문이나 산업에서 정한 보편적인 표준이 아닙니다.</strong> 이 프로젝트에서 측벽 품질의 설계 범위를 비교하기 위해 정한 주 기준입니다. 최종 결과에는 5%, 10%, 20% 경계선을 모두 표시합니다.</p>
     </section>
 
     <section id="references">
-      <h2>논문 → 가이드라인 Traceability</h2>
-      <p class="section-intro">기준 소자와 공정 benchmark의 역할을 분리합니다. 서로 다른 논문의 값을 무표시로 합쳐 한 논문 구조라고 부르지 않습니다.</p>
+      <h2>논문 → 가이드라인 연결</h2>
+      <p class="section-intro">논문 제목이나 아래 버튼을 누르면 가능한 경우 <strong>PDF가 바로 열리도록</strong> 연결했습니다. 출판사에서 직접 PDF 주소를 안정적으로 제공하지 않는 문헌은 원문 페이지로 연결됩니다.</p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>ID</th><th>문헌</th><th>사용 위치</th></tr></thead>
+          <thead><tr><th>ID</th><th>문헌</th><th>이 프로젝트에서 쓰는 이유</th></tr></thead>
           <tbody>
-            <tr><td>R1</td><td><a class="paper-link" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">Study of Double-Layer Passivation Effects in InGaN-based Blue Micro LEDs</a></td><td>실제 10 µm geometry/process, -3 V leakage, ALD Al₂O₃ + PECVD passivation benchmark</td></tr>
-            <tr><td>R2</td><td><a class="paper-link" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">High efficiency of III-nitride micro-light-emitting diodes by sidewall passivation using atomic layer deposition</a></td><td>상세 full-epi/MQW auxiliary reference, ALD passivation trend</td></tr>
-            <tr><td>R3</td><td><a class="paper-link" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">Size-independent peak efficiency of III-nitride micro-light-emitting-diodes using chemical treatment and sidewall passivation</a></td><td>chemical treatment + ALD calibration 후보</td></tr>
-            <tr><td>R4</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">Revealing the importance of light extraction efficiency in InGaN/GaN microLEDs via chemical treatment and dielectric passivation</a></td><td>독립 validation / treated-device size trend / LEE 주의</td></tr>
-            <tr><td>R5</td><td><a class="paper-link" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">Advanced technologies in InGaN micro-LED fabrication to mitigate the sidewall effect</a></td><td>damage depth vs effective influence width, wet removal/passivation 분류</td></tr>
-            <tr><td>R6</td><td><a class="paper-link" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">Long-Range Carrier Diffusion in (In,Ga)N Quantum Wells and Implications from Fundamentals to Devices</a></td><td>carrier-density-dependent diffusion, representative ABC sensitivity</td></tr>
-            <tr><td>R7</td><td><a class="paper-link" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">Understanding the Sidewall Passivation Effects in AlGaInP/GaInP Micro-LED</a></td><td>ABC→effective SRV extraction 방법론; AlGaInP 수치 직접 이식 금지</td></tr>
-            <tr><td>R8</td><td><a class="paper-link" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">Effect of Die Shape and Size on Performance of III-Nitride Micro-LEDs: A Modeling Study</a></td><td>3D/size/current-crowding modeling 참고</td></tr>
-            <tr><td>R9</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">Optoelectronic performance enhancement of 1–5 μm InGaN-based micro-LEDs using chemical etching coupled with dielectric passivation</a></td><td>1–5 µm final scaling, APSYS sidewall-defect model, close competitor</td></tr>
-            <tr><td><strong>R10</strong></td><td><a class="paper-link" href="https://doi.org/10.1016/j.micrna.2023.207542" target="_blank" rel="noopener"><strong>Physical mechanisms on the size-effect in GaN-based Micro-LEDs</strong></a></td><td><strong>Primary 10 µm TCAD physics/device baseline: 3.9 µm n-GaN, 4× In₀.₀₈GaN/GaN MQW 3/8 nm, p/n doping, 5 nm sidewall-trap region</strong></td></tr>
+            <tr><td>R1</td><td><a class="paper-link" href="https://scholar.gist.ac.kr/handle/local/19726" target="_blank" rel="noopener">Study of Double-Layer Passivation Effects in InGaN-based Blue Micro LEDs</a></td><td>실제 10 µm 구조와 공정, -3 V 누설전류, ALD Al₂O₃ + PECVD passivation 비교 근거</td></tr>
+            <tr><td>R2</td><td><a class="paper-link" href="https://doi.org/10.1364/OE.26.021324" target="_blank" rel="noopener">High efficiency of III-nitride micro-light-emitting diodes by sidewall passivation using atomic layer deposition</a></td><td>상세 epi/MQW 구조 참고와 ALD 측벽 passivation 경향</td></tr>
+            <tr><td>R3</td><td><a class="paper-link" href="https://doi.org/10.7567/1882-0786/ab3949" target="_blank" rel="noopener">Size-independent peak efficiency of III-nitride micro-light-emitting-diodes using chemical treatment and sidewall passivation</a></td><td>Wet chemical treatment + ALD 적용 후 크기별 효율 변화 비교</td></tr>
+            <tr><td>R4</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0011651" target="_blank" rel="noopener">Revealing the importance of light extraction efficiency in InGaN/GaN microLEDs via chemical treatment and dielectric passivation</a></td><td>모델 값을 정할 때 사용하지 않은 별도 문헌으로 검증할 후보, LEE 해석 주의</td></tr>
+            <tr><td>R5</td><td><a class="paper-link" href="https://doi.org/10.1038/s41377-025-01751-y" target="_blank" rel="noopener">Advanced technologies in InGaN micro-LED fabrication to mitigate the sidewall effect</a></td><td>측벽 손상 깊이와 유효 영향 폭 구분, Wet 제거와 passivation 방법 종합</td></tr>
+            <tr><td>R6</td><td><a class="paper-link" href="https://doi.org/10.1103/PhysRevApplied.15.054015" target="_blank" rel="noopener">Long-Range Carrier Diffusion in (In,Ga)N Quantum Wells and Implications from Fundamentals to Devices</a></td><td>carrier density에 따라 확산 길이가 달라질 수 있다는 근거</td></tr>
+            <tr><td>R7</td><td><a class="paper-link" href="https://doi.org/10.1186/s11671-022-03669-5" target="_blank" rel="noopener">Understanding the Sidewall Passivation Effects in AlGaInP/GaInP Micro-LED</a></td><td>크기별 EQE에서 유효 SRV를 추정하는 방법론 참고. AlGaInP 수치를 InGaN에 직접 사용하지 않음</td></tr>
+            <tr><td>R8</td><td><a class="paper-link" href="https://doi.org/10.3390/photonics5040041" target="_blank" rel="noopener">Effect of Die Shape and Size on Performance of III-Nitride Micro-LEDs: A Modeling Study</a></td><td>3D 구조, 크기 효과, current crowding을 해석할 때 참고</td></tr>
+            <tr><td>R9</td><td><a class="paper-link" href="https://doi.org/10.1063/5.0328266" target="_blank" rel="noopener">Optoelectronic performance enhancement of 1–5 μm InGaN-based micro-LEDs using chemical etching coupled with dielectric passivation</a></td><td>최종 1–5 µm 영역 확장과 최신 실험/시뮬레이션 비교 후보</td></tr>
+            <tr><td><strong>R10</strong></td><td><a class="paper-link" href="https://doi.org/10.1016/j.micrna.2023.207542" target="_blank" rel="noopener"><strong>Physical mechanisms on the size-effect in GaN-based Micro-LEDs</strong></a></td><td><strong>10 µm TCAD 기준 구조와 sidewall trap 물리를 정하는 가장 직접적인 참고문헌</strong></td></tr>
           </tbody>
         </table>
       </div>
@@ -173,15 +173,15 @@
 
     <section class="final-note">
       <h2>프로젝트 성공의 정의</h2>
-      <p>상용 AR 글래스의 비공개 구조를 추정하거나 원하는 그래프에 값을 맞추는 것이 아닙니다. <strong>공개 문헌 기반 10 µm InGaN/GaN 기준 소자에서 sidewall loss를 검증하고, wet chemical treatment + ALD passivation이 요구되는 범위를 재현 가능하게 제시한 뒤 검증된 모델만 4–5 µm 영역으로 확장하는 것</strong>이 최종 목표입니다.</p>
+      <p>상용 AR 글래스의 비공개 구조를 추정하거나 원하는 그래프에 값을 억지로 맞추는 것이 아닙니다. <strong>공개 문헌 기반 10 µm InGaN/GaN 기준 소자에서 sidewall loss를 검증하고, Wet chemical treatment + ALD passivation이 요구되는 범위를 재현 가능하게 제시한 뒤 검증된 모델만 4–5 µm 영역으로 확장하는 것</strong>이 최종 목표입니다.</p>
     </section>
   </main>
 
   <footer>
-    <div class="wrap"><span>CMP Micro-LED Sidewall TCAD Research Guide</span><span>Source-traceable · Gate-based · Upload-driven</span></div>
+    <div class="wrap"><span>CMP Micro-LED Sidewall TCAD Research Guide</span><span>출처 확인 · 단계별 검증 · 결과 누적</span></div>
   </footer>
 
-  <script src="app.js?v=20260826-r10"></script>
+  <script src="app.js?v=20260829-readable-pdf1"></script>
   <script src="submit.js?v=20260825-submit1"></script>
 </body>
 </html>
