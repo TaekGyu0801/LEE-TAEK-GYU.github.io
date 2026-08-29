@@ -158,7 +158,7 @@
       const btn = document.createElement('button');
       btn.className = 'toggle vault-phase-btn';
       btn.type = 'button';
-      btn.textContent = '📦 저장소';
+      btn.textContent = '파일 보기';
       btn.addEventListener('click', e => {
         e.stopPropagation();
         openVault(id);
