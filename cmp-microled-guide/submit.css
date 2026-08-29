@@ -1,21 +1,61 @@
 .login-btn{display:inline-flex;align-items:center;gap:8px;background:#24292f;color:#fff;border-color:#24292f}.login-btn:hover{background:#111820;color:#fff;border-color:#111820}.submission-center{border:1px solid var(--line);background:#fff;border-radius:18px;padding:24px;box-shadow:var(--shadow)}.submission-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.submission-head p{margin:4px 0 0;color:var(--muted)}.submission-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800;color:#344054}.field select,.field input[type="text"],.field textarea{width:100%;border:1px solid #cbd7e3;border-radius:10px;background:#fff;color:#1f2937;padding:11px 12px;font:inherit}.field textarea{min-height:150px;resize:vertical}.field input[type="file"]{width:100%;border:1px dashed #b7c6d6;border-radius:12px;background:#f8fbff;padding:14px}.helper{font-size:12px;color:var(--muted)}.submission-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.submission-actions .btn{min-height:42px}.submit-primary{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}.submit-secondary{background:#eef4ff!important;color:#175cd3!important;border-color:#b9d3ff!important}.copy-status{margin-top:12px;min-height:22px;font-size:13px;color:#067647;font-weight:700}.submission-note{margin-top:18px;padding:13px 15px;border-radius:12px;background:#fff8e7;border:1px solid #efd6a5;color:#805600;font-size:13px}.paper-link{color:#175cd3;text-decoration:none;font-weight:750}.paper-link:hover{text-decoration:underline}.paper-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}.paper-badge{display:inline-flex;padding:3px 7px;border-radius:7px;background:#eff6ff;border:1px solid #b9d3ff;color:#175cd3;text-decoration:none;font-size:11px;font-weight:800}.paper-status.verified{background:#ecfdf3;border-color:#a9dfc6;color:#067647}.paper-status.oa-status{background:#f5f3ff;border-color:#d2c2f4;color:#6941c6}
 
-/* concise project pipeline shown between official progress and research rules */
-.rules::before{
-  content:"프로젝트 진행 흐름\A 10 µm 기준 소자 구축  →  측벽 손상 수준 변화(SRV)  →  20·10·5·4 µm 크기 비교  →  성능 손실 계산  →  허용 가능한 측벽 손상 범위 도출  →  Wet/ALD 공정 효과와 비교";
-  display:block;
-  white-space:pre-line;
-  margin:0 0 46px;
-  padding:20px 22px;
+/* project pipeline */
+.rules::before{display:none!important;content:none!important}
+.project-pipeline{
+  margin:0 0 62px;
+  padding:26px 28px 30px;
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:18px;
   background:linear-gradient(180deg,#ffffff,#f8fbff);
-  box-shadow:0 8px 22px rgba(15,23,42,.05);
-  color:#253247;
-  font-size:16px;
-  font-weight:800;
-  line-height:1.9;
+  box-shadow:0 10px 28px rgba(15,23,42,.055)
 }
+.pipeline-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.pipeline-heading h2{margin:0;font-size:27px;color:#172033}
+.pipeline-heading p{margin:0;max-width:760px;color:var(--muted);font-size:14px;text-align:right;line-height:1.65}
+.pipeline-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr);
+  gap:8px;
+  align-items:stretch
+}
+.pipeline-step{
+  position:relative;
+  min-height:138px;
+  padding:18px 16px 16px;
+  border:1px solid #d8e3f0;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 4px 12px rgba(15,23,42,.035);
+  display:flex;
+  flex-direction:column;
+  justify-content:center
+}
+.pipeline-step b{
+  position:absolute;
+  top:12px;
+  left:14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:30px;
+  height:24px;
+  padding:0 7px;
+  border-radius:7px;
+  background:#eaf2ff;
+  color:#2563eb;
+  font-size:11px;
+  letter-spacing:.04em
+}
+.pipeline-step strong{display:block;margin-top:18px;color:#1f2d42;font-size:15px;line-height:1.45}
+.pipeline-step span{display:block;margin-top:7px;color:#667085;font-size:12px;line-height:1.5}
+.pipeline-arrow{display:flex;align-items:center;justify-content:center;color:#93a4b8;font-size:24px;font-weight:800}
+.pipeline-step-result{border-color:#a9dfc6;background:#f2fcf7}
+.pipeline-step-result b{background:#dcf7e9;color:#067647}
+.pipeline-step-final{border-color:#17336b;background:#17336b}
+.pipeline-step-final b{background:rgba(255,255,255,.14);color:#fff}
+.pipeline-step-final strong{color:#fff}
+.pipeline-step-final span{color:#d9e5ff}
 
 /* professor-facing wording: keep content clear without labeling it as 'easy' */
 #workflow .section-head p{display:none}
@@ -32,4 +72,15 @@
 #workflow .subunit-card div[style*="margin:10px"] strong{font-size:0}
 #workflow .subunit-card div[style*="margin:10px"] strong::after{content:"핵심 내용";font-size:12px}
 
-@media(max-width:760px){.submission-grid{grid-template-columns:1fr}.field.full{grid-column:1}.submission-head{flex-direction:column}.rules::before{font-size:14px;line-height:1.8;padding:17px 18px}}
+@media(max-width:1120px){
+  .pipeline-heading{align-items:flex-start;flex-direction:column;gap:6px}
+  .pipeline-heading p{text-align:left}
+  .pipeline-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .pipeline-arrow{display:none}
+}
+@media(max-width:760px){
+  .submission-grid{grid-template-columns:1fr}.field.full{grid-column:1}.submission-head{flex-direction:column}
+  .project-pipeline{padding:21px 18px 22px}
+  .pipeline-grid{grid-template-columns:1fr}
+  .pipeline-step{min-height:112px}
+}
