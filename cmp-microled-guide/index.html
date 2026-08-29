@@ -6,7 +6,7 @@
   <title>CMP Micro-LED TCAD Research Guide</title>
   <meta name="description" content="InGaN/GaN Micro-LED sidewall TCAD research guide, progress dashboard, artifacts and validation gates" />
   <link rel="stylesheet" href="style.css?v=20260825-light2" />
-  <link rel="stylesheet" href="submit.css?v=20260825-submit1" />
+  <link rel="stylesheet" href="submit.css?v=20260829-pipeline2" />
 </head>
 <body>
   <header class="hero">
@@ -30,6 +30,50 @@
   </header>
 
   <main class="wrap">
+    <section class="project-pipeline" aria-labelledby="pipelineTitle">
+      <div class="pipeline-heading">
+        <h2 id="pipelineTitle">프로젝트 진행 흐름</h2>
+        <p>기준 소자에서 시작해 측벽 손상과 크기 영향을 분리해 계산한 뒤, 최종적으로 크기별 허용 가능한 측벽 손상 범위를 찾습니다.</p>
+      </div>
+      <div class="pipeline-grid">
+        <article class="pipeline-step">
+          <b>01</b>
+          <strong>10 µm 기준 소자 구축</strong>
+          <span>정상 Micro-LED 기준 확보</span>
+        </article>
+        <div class="pipeline-arrow">→</div>
+        <article class="pipeline-step">
+          <b>02</b>
+          <strong>측벽 손상 수준 변화</strong>
+          <span>SRV를 단계적으로 입력</span>
+        </article>
+        <div class="pipeline-arrow">→</div>
+        <article class="pipeline-step">
+          <b>03</b>
+          <strong>소자 크기 비교</strong>
+          <span>20 → 10 → 5 → 4 µm</span>
+        </article>
+        <div class="pipeline-arrow">→</div>
+        <article class="pipeline-step">
+          <b>04</b>
+          <strong>성능 손실 계산</strong>
+          <span>정상 소자 대비 효율 저하</span>
+        </article>
+        <div class="pipeline-arrow">→</div>
+        <article class="pipeline-step pipeline-step-result">
+          <b>05</b>
+          <strong>허용 손상 범위 도출</strong>
+          <span>크기별 측벽 손상 한계</span>
+        </article>
+        <div class="pipeline-arrow">→</div>
+        <article class="pipeline-step pipeline-step-final">
+          <b>06</b>
+          <strong>Wet / ALD와 비교</strong>
+          <span>실제 공정 개선 효과 해석</span>
+        </article>
+      </div>
+    </section>
+
     <section class="rules" id="rules">
       <h2>연구 운영 규칙</h2>
       <p class="section-intro">이 프로젝트에서 “정답”은 예상 그래프가 아니라 <strong>근거를 확인하고 다시 실행할 수 있는 결과</strong>입니다.</p>
@@ -128,7 +172,7 @@
 
     <section id="workflow">
       <div class="section-head">
-        <div><h2>연구 진행 단계 · P0~P9</h2><p>처음 보는 사람도 이해할 수 있도록 각 Phase에 “쉽게 말하면” 설명과 세부 소단원을 함께 표시합니다.</p></div>
+        <div><h2>연구 진행 단계 · P0~P9</h2></div>
         <a class="btn small" href="#submit">결과 제출하기</a>
       </div>
       <div id="phaseList" class="phase-list"></div>
