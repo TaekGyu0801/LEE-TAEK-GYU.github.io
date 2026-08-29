@@ -21,9 +21,9 @@
 #workflow .section-head p{display:none}
 #phaseList>.gate>strong{font-size:0}
 #phaseList>.gate>strong::after{content:"연구 단계 요약";font-size:16px}
-#workflow button.toggle{font-size:0;min-width:88px}
-#workflow button.toggle::after{content:"내용 보기";font-size:13px}
-#workflow .phase-card.open button.toggle::after{content:"접기"}
+#workflow button.toggle:not(.vault-phase-btn){font-size:0;min-width:88px}
+#workflow button.toggle:not(.vault-phase-btn)::after{content:"내용 보기";font-size:13px}
+#workflow .phase-card.open button.toggle:not(.vault-phase-btn)::after{content:"접기"}
 #workflow .phase-body>div[style*="padding:14px"]>strong{font-size:0}
 #workflow .phase-body>div[style*="padding:14px"]>strong::after{content:"핵심 내용";font-size:13px}
 #workflow .subunit-head h4{font-size:0}
