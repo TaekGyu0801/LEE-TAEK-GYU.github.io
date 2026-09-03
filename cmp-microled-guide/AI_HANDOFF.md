@@ -259,3 +259,32 @@
 
 - R4/R9의 출판사 직접 PDF 주소가 안정적으로 확인되면 DOI fallback을 direct PDF로 교체.
 - 사용자가 ‘첨부했던 정확한 PDF 파일’을 사이트에서 직접 열기를 원할 경우, 공개 재배포 가능한 문헌만 `papers/` 같은 정적 폴더에 원본 그대로 저장하고 링크하는 구조를 별도로 적용.
+
+---
+
+## 2026-09-03 — ChatGPT · 10 µm 실동작 소자 후보 추가 확인
+
+### 새로 확인한 문헌 후보
+
+- Woo Jin Baek et al., *Ultra-low-current driven InGaN blue micro light-emitting diodes for electrically efficient and self-heating relaxed microdisplay*, Nature Communications 14, 1386 (2023), DOI 10.1038/s41467-023-36773-w.
+- 이 논문은 10×10 µm² InGaN 청색 µLED를 실제 제작하고 전류 주입 시 발광을 확인했으며, 동일한 10×10 µm² 크기를 Silvaco ATLAS로 계산함.
+- 실제 실험 소자는 QB 10.5 Balanced EBL 기준 0.1 A/cm²에서 as-deposited EQE 2.04%, KOH+ALD sidewall-passivated EQE 3.00%를 보고함.
+
+### 공개된 구현 정보
+
+- 8-inch Si(111) 기판, 200 nm AlN buffer, 20쌍 AlGaN/AlN superlattice, 150 nm AlGaN buffer.
+- u-GaN 1.5 µm, n-GaN 1.5 µm, 20쌍 In0.02GaN/GaN strain-relief superlattice 1.5/2 nm.
+- 6쌍 InGaN/GaN MQW, QW 2.7 nm, 비교 QB 3.5/7.5/10.5 nm.
+- 일반 EBL: Al0.2In0.02Ga0.78N 17 nm, Mg 2×10^18 cm^-3.
+- Balanced EBL: Al0.12In0.02Ga0.86N 45 nm, Mg 2×10^19 cm^-3.
+- 측벽 공정: Cl2 dry etch 후 KOH 2 mol/L, 실온 40 min + ALD Al2O3 50 nm.
+- 접촉/전극으로 ITO 및 Ti/Au 20/200 nm를 사용.
+- 시뮬레이션: 10×10 µm² vertical structure, polarization 50%, band-offset ratio 0.5:0.5, SRV 1×10^5 cm/s, SRH lifetime 100 ns, B=1×10^-10 cm^3/s, C=1×10^-31 cm^6/s.
+
+### 재현성 판정
+
+- **실제로 켜진 10 µm 소자 + 10 µm TCAD가 함께 있는 가장 직접적인 후보**임.
+- 다만 simulation code는 공개되어 있지 않고 저자에게 요청해야 하며, n-GaN/p-GaN의 전체 도핑·두께, QW 조성, 완전한 contact/mesh 설정 등 일부 입력이 논문 본문만으로는 잠기지 않음.
+- 따라서 공개 파일을 내려받아 즉시 실행하는 완전한 baseline deck은 아니며, Wu R10을 자동 대체하지 않는다.
+- 공식 역할은 사용자가 확정하기 전까지 **R11 후보: 10 µm 실동작·TCAD cross-check anchor**로 보류한다.
+- 이 논문의 EQE 결과는 실동작 확인과 교차검증에만 사용하며, 현재 프로젝트의 중심 성능 지표로 자동 승격하지 않는다.
