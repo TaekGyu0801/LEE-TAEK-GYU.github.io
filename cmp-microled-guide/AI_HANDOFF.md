@@ -288,3 +288,31 @@
 - 따라서 공개 파일을 내려받아 즉시 실행하는 완전한 baseline deck은 아니며, Wu R10을 자동 대체하지 않는다.
 - 공식 역할은 사용자가 확정하기 전까지 **R11 후보: 10 µm 실동작·TCAD cross-check anchor**로 보류한다.
 - 이 논문의 EQE 결과는 실동작 확인과 교차검증에만 사용하며, 현재 프로젝트의 중심 성능 지표로 자동 승격하지 않는다.
+
+---
+
+## 2026-09-07 — ChatGPT · 기준 소자와 결론 판정 기준 재검증
+
+### 확인 자료
+
+- GitHub의 `GUIDELINE.md`, `PARAMETER_MASTER.md`, `P2_SPEC.md`, `P2_PARAMETER_ASSURANCE.md`, `P2_HIGH_RISK_RESOLUTION.md`, P2 개발 command 및 기존 handoff를 대조함.
+- 사용자 첨부 Shin (2024) 석사학위논문 원문과 공식 GIST Scholar 기록을 대조함.
+- Wu (2023), Kou (2019), Wong (2018), Chang (2020), Baek (2023)의 출판사/기관 페이지를 재확인함.
+
+### 현재 기준 소자 판정
+
+- **10 µm InGaN/GaN blue Micro-LED를 기준 크기로 사용하는 것은 확정**이다.
+- Wu (2023) R10은 10 µm sidewall-trap TCAD physics/device primary reference이지만 p-GaN 두께, complete contact geometry, complete trap parameter, simulator vendor가 미확정이므로 완전한 Sentaurus replica는 아니다.
+- Chang (2020)은 실제 제작·측정 10×10 µm² 소자와 APSYS 입력이 비교적 상세한 physical-reference candidate이나 Sentaurus translation과 contact/polarization 불확실성이 남아 final lock 전이다.
+- Baek (2023)은 실제 발광한 10×10 µm² 소자와 동일 크기 TCAD를 함께 제시한 R11 cross-check 후보이며 Wu를 자동 대체하지 않는다.
+- 서버에서 실행한 10-QW/In0.18 cylindrical deck은 development snapshot이며 공식 최종 baseline이 아니다.
+
+### 결론 판정 기준
+
+- 같은 크기, 같은 epi/contact/bias를 유지하고 sidewall condition만 바꾼 reference/case를 비교한다.
+- 핵심 방향성은 reverse leakage 증가, sidewall/MQW의 SRH 비방사 손실 증가, radiative recombination fraction 감소이다.
+- 진단 지표는 `eta_rec = integral(Rrad) / integral(Rrad+RSRH+RAuger)`, 주 후보는 `eta_int,I = q*integral(Rrad)/I_terminal`이다.
+- penalty는 `P_eta(L)=[1-eta_case(L)/eta_reference(L)]*100%`이다.
+- 5/10/20% contour와 대표 10% 기준은 CMP 내부 project criterion이며 논문·산업 표준에서 가져온 수치가 아니다.
+- Shin의 10 µm, -3 V leakage 95.8% 감소는 해당 실험 구조의 benchmark이며 모든 TCAD 구조의 의무 fitting target이 아니다.
+
