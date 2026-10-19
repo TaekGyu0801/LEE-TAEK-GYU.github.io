@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>행렬 계산형 4유형 판별 가이드</title>
+  <style>
+    :root { --ink:#172943; --muted:#5e7087; --blue:#344f73; --pale:#eaf1f7; --line:#d9e2ea; --paper:#fff; --bg:#f3f6f9; --good:#1e7454; --bad:#a43d43; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans KR","Malgun Gothic",sans-serif; line-height:1.7; }
+    button { font:inherit; cursor:pointer; }
+    a { color:var(--blue); }
+    .wrap { max-width:1080px; margin:auto; padding:28px 20px 70px; }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+    .back { display:inline-block; padding:8px 13px; border:1px solid var(--line); border-radius:9px; background:white; font-weight:800; text-decoration:none; }
+    .eyebrow { margin:0; color:var(--blue); font-size:.82rem; font-weight:900; letter-spacing:.08em; }
+    h1 { margin:12px 0 8px; font-size:clamp(1.75rem,4vw,2.7rem); line-height:1.25; }
+    h2 { margin:0 0 16px; font-size:1.45rem; }
+    h3 { margin:0 0 8px; font-size:1.08rem; }
+    p { margin:8px 0 0; }
+    .lead { color:var(--muted); max-width:760px; font-size:1.04rem; }
+    .notice { margin:20px 0 0; padding:17px 20px; background:#fff; border-left:5px solid var(--blue); border-radius:10px; }
+    nav { display:flex; gap:8px; flex-wrap:wrap; margin:22px 0 0; }
+    nav a { padding:7px 12px; border-radius:99px; background:var(--pale); text-decoration:none; font-weight:800; font-size:.84rem; }
+    section { margin-top:26px; padding:24px; border:1px solid var(--line); border-radius:17px; background:var(--paper); box-shadow:0 10px 32px rgba(30,55,77,.05); }
+    .sub { margin:-5px 0 18px; color:var(--muted); }
+    .flow { display:grid; gap:10px; }
+    .step { display:grid; grid-template-columns:36px 1fr; gap:13px; align-items:start; padding:14px; background:#f7fafc; border:1px solid var(--line); border-radius:11px; }
+    .step b:first-child { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; background:var(--blue); color:#fff; }
+    .step p { margin:0; }
+    .key { background:#fff2cf; border-radius:4px; padding:0 3px; font-weight:800; }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .card { border:1px solid var(--line); border-radius:13px; padding:19px; background:#fbfcfd; }
+    .tag { display:inline-block; padding:4px 9px; border-radius:6px; background:var(--pale); color:var(--blue); font-weight:900; font-size:.78rem; }
+    .card h3 { margin:10px 0; }
+    .card ul { margin:8px 0 0; padding-left:21px; }
+    .card li { margin:5px 0; }
+    .math { display:block; margin:12px 0; padding:11px 14px; background:#eef4f8; border-radius:8px; font-family:Cambria,"Times New Roman",serif; font-size:1.12rem; overflow-x:auto; white-space:nowrap; }
+    .example { margin-top:13px; padding:12px 14px; border-left:3px solid var(--blue); background:#fff; }
+    .example strong { display:block; }
+    .table-scroll { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; min-width:620px; }
+    th,td { text-align:left; padding:12px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { background:var(--pale); }
+    td:first-child { font-weight:900; }
+    .tip-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .tip { padding:14px; border:1px solid var(--line); border-radius:10px; background:#f8fafc; }
+    .tip strong { color:var(--blue); }
+    .quiz { display:grid; gap:14px; }
+    .quiz-card { padding:18px; border:1px solid var(--line); border-radius:12px; }
+    .quiz-card.correct { border-color:#8bceb2; background:#f4fbf7; }
+    .quiz-card.wrong { border-color:#deaeb0; background:#fff7f5; }
+    .quiz-card h3 { margin:0 0 10px; }
+    .choices { display:flex; gap:8px; flex-wrap:wrap; margin-top:13px; }
+    .choices button { border:1px solid #9bafc1; border-radius:8px; background:white; color:var(--blue); padding:7px 11px; font-weight:800; }
+    .choices button:hover,.choices button:focus-visible { background:var(--pale); }
+    .choices button:disabled { opacity:.7; cursor:default; }
+    .choices button.picked { border-color:var(--blue); background:var(--blue); color:#fff; opacity:1; }
+    .feedback { min-height:25px; margin-top:10px; font-weight:700; }
+    .correct .feedback { color:var(--good); }
+    .wrong .feedback { color:var(--bad); }
+    .quiz-top { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .score { font-weight:900; color:var(--blue); }
+    .reset { border:1px solid var(--blue); border-radius:8px; background:white; color:var(--blue); padding:7px 12px; font-weight:800; }
+    .small { color:var(--muted); font-size:.87rem; }
+    @media(max-width:700px) { .cards,.tip-grid { grid-template-columns:1fr; } section { padding:18px; } }
+    @media print { body { background:white; } nav,.back,.choices,.reset { display:none; } section { break-inside:avoid; box-shadow:none; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top"><p class="eyebrow">고급공학수학2 · 계산형 4문제</p><a class="back" href="index.html">← 문제은행으로 돌아가기</a></div>
+    <h1>행렬 문제, 어디를 보고 풀이법을 고를까?</h1>
+    <p class="lead">네 유형 모두 행렬이 나오지만, <strong>구하려는 결과</strong>와 <strong>문제에서 지정한 방법</strong>이 다릅니다. 표가 나왔다고 바로 계산하지 말고 마지막 지시문부터 읽어 보세요.</p>
+    <div class="notice"><strong>가장 중요한 원칙</strong> · 문제에 “크래머 법칙으로”, “가우스 소거법으로”, “역행렬을 구한 뒤”처럼 방법이 적혀 있으면 그 방법을 따라야 합니다. 단지 Ax=b라는 모양만으로는 세 방법 중 하나를 확정할 수 없습니다.</div>
+    <nav aria-label="가이드 목차"><a href="#decision">15초 판별</a><a href="#types">유형별 첫 줄</a><a href="#compare">헷갈리는 차이</a><a href="#mistakes">계산 실수 방지</a><a href="#quiz">판별 연습</a></nav>
+
+    <section id="decision">
+      <h2>문제를 받으면 이 순서로 보기</h2>
+      <div class="flow">
+        <div class="step"><b>1</b><p><strong>무엇을 구하라고 했나?</strong> 두 표를 합쳐 조별·자원별 <span class="key">총량 표</span>를 구하면 <strong>행렬의 곱셈</strong>. 미지수 x₁, x₂, …를 구하면 다음 단계로 갑니다.</p></div>
+        <div class="step"><b>2</b><p><strong>방법 지정이 있나?</strong> <span class="key">역행렬, [A|I], A⁻¹</span>이면 역행렬 유형. <span class="key">크래머, det(Aᵢ)/det(A)</span>이면 크래머. <span class="key">가우스, 첨가행렬 [A|b], 행 사다리꼴, 역대입</span>이면 가우스 소거법입니다.</p></div>
+        <div class="step"><b>3</b><p><strong>방법을 지정하지 않았다면?</strong> Ax=b는 여러 방법으로 풀 수 있습니다. 계산이 쉬운 방법을 고르되, 시험 지시문이나 교수님이 요구한 풀이 과정을 먼저 확인하세요. 미지수가 더 많고 자유변수가 나오면 가우스 소거법이 자연스럽습니다.</p></div>
+      </div>
+    </section>
+
+    <section id="types">
+      <h2>네 유형의 첫 줄과 목표</h2>
+      <p class="sub">현재 문제은행의 실전 모의시험은 아래 네 계산형 유형을 한 문제씩 냅니다.</p>
+      <div class="cards">
+        <article class="card"><span class="tag">1 · 크래머 법칙</span><h3>“행렬식으로 각 미지수”</h3>
+          <p><strong>단서:</strong> 자원 총량·묶음 가격처럼 미지수와 방정식이 같은 개수이며, “크래머 법칙”을 요구합니다.</p>
+          <span class="math">Ax=b, &nbsp; xᵢ = det(Aᵢ) / det(A)</span>
+          <ul><li>표의 <strong>행</strong>은 방정식, <strong>열</strong>은 미지수 순서로 A와 b를 씁니다.</li><li>Aᵢ는 A의 <strong>i번째 열만</strong> b로 바꾼 행렬입니다.</li><li>det(A)=0이면 이 공식으로 나눌 수 없습니다.</li></ul>
+          <div class="example"><strong>첫 줄 예시</strong> “키트 A, B, C 개수를 x₁, x₂, x₃로 두고 Ax=b를 만든다.”</div>
+        </article>
+        <article class="card"><span class="tag">2 · 행렬의 곱셈</span><h3>“두 표를 연결해 총량 표”</h3>
+          <p><strong>단서:</strong> 첫 표는 조별 활동량, 둘째 표는 항목 하나당 자원량처럼 <strong>공통 항목</strong>으로 이어집니다.</p>
+          <span class="math">P: (조 × 항목), &nbsp; M: (항목 × 자원) → T=PM</span>
+          <ul><li>안쪽 크기인 ‘항목’이 같아야 곱할 수 있습니다.</li><li>답의 <strong>행은 앞 행렬의 행</strong>, <strong>열은 뒤 행렬의 열</strong>입니다.</li><li>Tᵢⱼ는 앞 행렬의 i행과 뒤 행렬의 j열을 곱해 더한 값입니다.</li></ul>
+          <div class="example"><strong>첫 줄 예시</strong> “오전·오후 조 × 검사 A·B”와 “검사 A·B × 시약 P·Q·R”이므로 T=PM은 2×3입니다.</div>
+        </article>
+        <article class="card"><span class="tag">3 · 가우스 소거법</span><h3>“연립방정식의 해를 구하기”</h3>
+          <p><strong>단서:</strong> “첨가행렬”, “행 사다리꼴”, “자유변수”, “역대입”이라는 말이 보입니다. 연소 반응의 최소 정수 계수도 여기에 속합니다.</p>
+          <span class="math">Ax=b → [A|b] → 행 사다리꼴 → 역대입</span>
+          <ul><li>오른쪽은 방정식의 값 b입니다. 동차식이면 b=0입니다.</li><li>피벗 아래를 0으로 만들고 마지막 행부터 해를 구합니다.</li><li>자유변수가 있으면 매개변수로 놓고 조건에 맞는 해를 고릅니다.</li></ul>
+          <div class="example"><strong>첫 줄 예시</strong> “x₁C₃H₈ + x₂O₂ → x₃CO₂ + x₄H₂O”는 원자 보존식 세 개로 Ax=0을 만듭니다.</div>
+        </article>
+        <article class="card"><span class="tag">4 · 역행렬 / 가우스–조던</span><h3>“먼저 A⁻¹ 자체를 구하기”</h3>
+          <p><strong>단서:</strong> “역행렬을 구하라”, “가우스–조던”, “x=A⁻¹b”가 보입니다. 가격 문제도 역행렬을 요구하면 이 유형입니다.</p>
+          <span class="math">[A|I] → [I|A⁻¹], &nbsp; 그다음 x=A⁻¹b</span>
+          <ul><li>처음 오른쪽은 b가 아니라 <strong>단위행렬 I</strong>입니다.</li><li>행을 바꾸거나 곱할 때 세로선 양쪽을 함께 바꿉니다.</li><li>왼쪽이 I가 되면 오른쪽을 그대로 A⁻¹로 읽습니다. det(A)=0이면 역행렬이 없습니다.</li></ul>
+          <div class="example"><strong>첫 줄 예시</strong> “묶음별 개별 가격을 역행렬로 구하라”면 Ax=b를 만든 뒤 [A|I]부터 시작합니다.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="compare">
+      <h2>같은 Ax=b에서 가장 많이 헷갈리는 차이</h2>
+      <div class="notice"><strong>크기 기준은 계수행렬 A</strong> · A가 4×4이면 [A|b]는 4×5, [A|I]는 4×8입니다. 오른쪽에 붙인 열 때문에 커져도 A 자체는 여전히 4×4입니다. 직사각형 A에는 크래머 법칙과 역행렬을 바로 적용할 수 없습니다.</div>
+      <div class="table-scroll"><table><thead><tr><th>문제의 요구</th><th>계산 출발</th><th>마지막에 얻는 것</th></tr></thead><tbody>
+        <tr><td>크래머 법칙</td><td>det(A), det(A₁), det(A₂), …</td><td>각 xᵢ=det(Aᵢ)/det(A)</td></tr>
+        <tr><td>가우스 소거법</td><td>첨가행렬 [A|b]</td><td>행 사다리꼴에서 역대입한 x</td></tr>
+        <tr><td>역행렬을 구한 뒤 풀이</td><td>첨가행렬 [A|I]</td><td>A⁻¹, 이어서 x=A⁻¹b</td></tr>
+        <tr><td>행렬곱으로 총량</td><td>서로 연결되는 두 행렬 P, M</td><td>조 × 자원 형태의 PM</td></tr>
+      </tbody></table></div>
+      <p class="small">“행렬식을 이용해 역행렬을 구하라”면 역행렬 유형이지만, 계산 방법은 여인수·수반행렬을 이용합니다. det라는 단어 하나만 보고 크래머 법칙으로 분류하지 마세요.</p>
+    </section>
+
+    <section id="mistakes">
+      <h2>계산 시작 전 5초 확인</h2>
+      <div class="tip-grid">
+        <div class="tip"><strong>행렬곱</strong><br>앞 행렬의 열 수 = 뒤 행렬의 행 수? 답의 행·열 이름은 무엇인가?</div>
+        <div class="tip"><strong>크래머</strong><br>Aᵢ에서 바꿀 곳은 i번째 <em>열</em>이다. 행렬식에서 행 교환을 했다면 부호를 바꾼다.</div>
+        <div class="tip"><strong>가우스</strong><br>[A|b]의 세로선 오른쪽까지 매번 같은 행연산을 한다. 한 행을 바꾸면 다음 계산에는 그 새 행을 쓴다.</div>
+        <div class="tip"><strong>역행렬</strong><br>[A|I]로 시작한다. 행 전체를 교환해도 되며, 왼쪽이 I가 된 뒤 오른쪽이 역행렬이다.</div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="quiz-top"><div><h2>유형 판별 연습</h2><p class="sub">계산 전에 어느 풀이를 써야 하는지만 골라 보세요.</p></div><div><span class="score" id="score" aria-live="polite">0 / 10 정답</span> <button class="reset" id="reset" type="button">다시 풀기</button></div></div>
+      <div class="quiz" id="quiz-list"></div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      "use strict";
+      const names = { cramer:"크래머", multiply:"행렬곱", gauss:"가우스 소거", inverse:"역행렬" };
+      const items = [
+        { text:"키트 A·B·C의 생산 개수를 구하라. Ax=b를 만들고 det(A), det(A₁), det(A₂), det(A₃)를 구하라.", answer:"cramer", why:"A의 열을 b로 바꾼 행렬식으로 각 미지수를 구하므로 크래머 법칙입니다." },
+        { text:"작업장별 제품 생산량 표와 제품 하나당 재료 사용량 표를 곱해 작업장별 재료 총량을 구하라.", answer:"multiply", why:"두 표의 공통 항목인 제품을 따라 연결하므로 행렬곱입니다." },
+        { text:"프로판 연소의 원자 수 보존식을 세우고 [A|0]을 행 사다리꼴로 만들어 최소 정수 계수를 구하라.", answer:"gauss", why:"[A|0], 행 사다리꼴, 자유변수가 단서입니다." },
+        { text:"세 묶음의 가격에서 개별 가격을 구하라. 먼저 [A|I]에 가우스–조던 소거법을 적용하라.", answer:"inverse", why:"오른쪽에 I를 붙여 A⁻¹을 만드는 역행렬 문제입니다." },
+        { text:"2×3 활동량 행렬 P와 3×2 자원량 행렬 M에서 T=PM의 2행 1열이 뜻하는 바를 설명하라.", answer:"multiply", why:"T=PM의 한 성분은 앞 행의 활동량과 뒤 열의 자원량을 합친 값입니다." },
+        { text:"네 종류의 키트 생산 개수를 [A|b]에서 소거하여 구하고 마지막 행부터 역대입하라.", answer:"gauss", why:"[A|b]를 소거하고 역대입하는 것이 가우스 소거법입니다." },
+        { text:"행렬식과 여인수행렬을 이용해 A⁻¹을 구하고 AA⁻¹=I로 검산하라.", answer:"inverse", why:"det가 나오지만 목표가 각 미지수가 아니라 A⁻¹ 자체이므로 역행렬 문제입니다." },
+        { text:"det(A)≠0일 때 세 가격을 xᵢ=det(Aᵢ)/det(A)로 계산하라.", answer:"cramer", why:"det(Aᵢ)/det(A)는 크래머 법칙의 공식입니다." },
+        { text:"연립방정식의 첨가행렬을 만들고 피벗이 없는 열의 변수를 t로 두어 모든 해를 표현하라.", answer:"gauss", why:"피벗과 자유변수를 찾는 소거 문제입니다." },
+        { text:"Ax=b를 만든 다음 A⁻¹을 직접 구해 x=A⁻¹b를 계산하라.", answer:"inverse", why:"Ax=b는 여러 방법이 가능하지만 A⁻¹을 직접 요구했으므로 역행렬 유형입니다." }
+      ];
+      const list = document.getElementById("quiz-list");
+      const score = document.getElementById("score");
+      const selections = Array(items.length).fill(null);
+      function updateScore() {
+        const correct = selections.filter((picked,i) => picked === items[i].answer).length;
+        const done = selections.filter(Boolean).length;
+        score.textContent = correct + " / " + items.length + " 정답 · " + done + "문제 선택";
+      }
+      function render() {
+        list.innerHTML = items.map((item,i) => '<article class="quiz-card" data-index="' + i + '"><h3>' + String(i+1).padStart(2,"0") + '. ' + item.text + '</h3><div class="choices" role="group" aria-label="' + (i+1) + '번 유형 선택">' + Object.entries(names).map(([key,label]) => '<button type="button" data-answer="' + key + '">' + label + '</button>').join("") + '</div><p class="feedback" aria-live="polite"></p></article>').join("");
+        updateScore();
+      }
+      list.addEventListener("click", event => {
+        const button = event.target.closest("button[data-answer]");
+        if (!button) return;
+        const card = button.closest("[data-index]");
+        const i = Number(card.dataset.index);
+        selections[i] = button.dataset.answer;
+        const correct = selections[i] === items[i].answer;
+        card.classList.toggle("correct", correct);
+        card.classList.toggle("wrong", !correct);
+        card.querySelectorAll("button").forEach(choice => { choice.classList.toggle("picked", choice === button); choice.setAttribute("aria-pressed", String(choice === button)); });
+        card.querySelector(".feedback").textContent = (correct ? "정답. " : "다시 확인: 정답은 " + names[items[i].answer] + ". ") + items[i].why;
+        updateScore();
+      });
+      document.getElementById("reset").addEventListener("click", () => { selections.fill(null); render(); });
+      render();
+    })();
+  </script>
+</body>
+</html>
+
